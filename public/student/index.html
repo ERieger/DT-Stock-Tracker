@@ -124,7 +124,7 @@
 							new ones, or submit them to be processed.
 						</p>
 						<p>
-							<a href="#" class="btn btn-primary my-2"
+							<a href="#panelsStayOpen-headingThree" class="btn btn-primary my-2"
 								>Create a New Project</a
 							>
 							<a href="#" class="btn btn-secondary my-2"
@@ -306,6 +306,75 @@
 									</div>
 								</div>
 							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Edit / Add -->
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="panelsStayOpen-headingThree">
+						<button
+							class="accordion-button"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#panelsStayOpen-collapseThree"
+							aria-expanded="true"
+							aria-controls="panelsStayOpen-collapseTwhree"
+						>
+							Current Projects
+						</button>
+					</h2>
+					<div
+						id="panelsStayOpen-collapseThree"
+						class="accordion-collapse collapse show"
+						aria-labelledby="panelsStayOpen-headingTwhree"
+					>
+						<div class="accordion-body">
+							<form>
+								<div class="row mt-3">
+									<div class="form-group col-5">
+									<select name="material" id="material" class="form-select">
+										<option value="null">Select a material</option>
+									</select>
+									</div>
+									<div class="form-group col-3">
+										<input type="number" name="qty" id="Qty" min="0" class="form-control" placeholder="Qty">
+									</div>
+									<div class="col">
+										<input type="number" name="w" id="w" class="form-control" placeholder="w">
+									</div>
+									<div class="col">
+										<input type="number" name="h" id="h" class="form-control" placeholder="h">
+									</div>
+									<div class="col">
+										<input type="number" name="l" id="l" class="form-control" placeholder="l">
+									</div>
+									<div class="form-group col">
+										<button type="button" class="btn btn-danger">Delete</button>
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col">
+										<input type="text" name="name" id="name" class="form-control" placeholder="Name">
+									</div>
+									<div class="col">
+										<select name="class" id="class" class="form-select">
+											<option value="null">Select your class</option>
+										</select>
+									</div>
+									<div class="col-1">
+										<button type="button" class="btn btn-primary">+</button>
+									</div>
+								</div>
+								<div class="row mt-3 justify-content-center text-center">
+									<div class="col">
+										<button type="submit" class="btn btn-primary w-50" >Sumbit</button>
+									</div>
+									<div class="col">
+										<button type="button" class="btn btn-danger w-50" >Delete</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
