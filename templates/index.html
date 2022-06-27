@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-    <!-- Meta properties -->
+		<!-- Meta properties -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="A Website to manage projects within the Design and Technologies department of Concordia College, Adelaide SA" />
 		<meta
-			name="author"
-			content="Aidan Matthews and Elijah Rieger"
+			name="description"
+			content="A Website to manage projects within the Design and Technologies department of Concordia College, Adelaide SA"
 		/>
+		<meta name="author" content="Aidan Matthews and Elijah Rieger" />
 
 		<title>D&T Project Manager</title>
 
@@ -23,7 +23,7 @@
 
 		<meta name="theme-color" content="#7952b3" />
 
-    <!-- placeholder image for project cards -->
+		<!-- placeholder image for project cards -->
 		<style>
 			.bd-placeholder-img {
 				font-size: 1.125rem;
@@ -38,11 +38,25 @@
 					font-size: 3.5rem;
 				}
 			}
+
+			.project-preview {
+				overflow: hidden;
+				height: 3em;
+				line-height: 1em;
+				position: relative;
+				word-wrap: break-word;
+			}
+
+			.project-preview:after {
+				content: "...";
+				position: absolute;
+				right: 0;
+				bottom: 2px;
+			}
 		</style>
 	</head>
 	<body>
 		<header>
-			<!-- Popout Navbar Header -->
 			<div class="collapse bg-dark" id="navbarHeader">
 				<div class="container">
 					<div class="row">
@@ -55,29 +69,27 @@
 							</p>
 						</div>
 						<div class="col-sm-4 offset-md-1 py-4">
-							<h4 class="text-white">Links</h4>
+							<h4 class="text-white">Actions</h4>
 							<ul class="list-unstyled">
 								<li>
 									<a
 										href="https://www.concordia.sa.edu.au/"
 										class="text-white"
-										>Concordia College Website</a
+										>Login</a
 									>
 								</li>
 								<li>
-									<a href="#" class="text-white"
-										>Like on Facebook</a
+									<a
+										href="#"
+										class="text-white visually-hidden admin-actions"
+										>Manage Orders</a
 									>
-								</li>
-								<li>
-									<a href="#" class="text-white">Email me</a>
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Navbar -->
 			<div class="navbar navbar-dark bg-dark shadow-sm">
 				<div class="container">
 					<a href="#" class="navbar-brand d-flex align-items-center">
@@ -114,7 +126,6 @@
 		</header>
 
 		<main>
-			<!-- Manage Projects Hero -->
 			<section class="py-5 text-center container">
 				<div class="row py-lg-5">
 					<div class="col-lg-6 col-md-8 mx-auto">
@@ -124,23 +135,21 @@
 							new ones, or submit them to be processed.
 						</p>
 						<p>
-							<a href="#panelsStayOpen-headingThree" class="btn btn-primary my-2"
+							<a href="./form.html" class="btn btn-primary my-2"
 								>Create a New Project</a
 							>
-							<a href="#" class="btn btn-secondary my-2"
+							<!-- <a href="#" class="btn btn-secondary my-2"
 								>Secondary action</a
-							>
+							> -->
 						</p>
 					</div>
 				</div>
 			</section>
 
-			<!-- Accordian Menus Start Here -->
 			<div
-			class="accordian accordian-flush"
-			id="currentProjectsAccordian"
+				class="accordian accordian-flush"
+				id="currentProjectsAccordian"
 			>
-			<!-- Current Projects -->
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
 						<button
@@ -154,17 +163,18 @@
 							Current Projects
 						</button>
 					</h2>
+					<!-- This accordian is shown by default -->
 					<div
 						id="panelsStayOpen-collapseOne"
 						class="accordion-collapse collapse show"
 						aria-labelledby="panelsStayOpen-headingOne"
 					>
 						<div class="accordion-body">
-							<div class="album py-5 bg-light" >
+							<div class="album py-5 bg-light">
 								<div class="container">
 									<div
 										class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"
-                    id="current-album-container"
+										id="current-album-container"
 									>
 										<div class="col">
 											<div class="card shadow-sm">
@@ -195,8 +205,74 @@
 												</svg>
 
 												<div class="card-body">
-                          <h5 class="card-title">Project title</h3>
-													<p class="card-text">
+													<h5 class="card-title">
+														Project title
+													</h5>
+													<p
+														class="card-text project-preview"
+													>
+														This is a short
+														description of the
+														project, with
+														information such as the
+														purpose of the product
+														or what it is made of.
+														Materials, size, colour,
+														other things.
+													</p>
+													<div
+														class="d-flex justify-content-between align-items-center"
+													>
+														<button
+															type="button"
+															class="btn btn-sm btn-outline-secondary"
+															onclick="window.location.href='form.html'"
+														>
+															Edit
+														</button>
+														<small
+															class="text-muted"
+															>9 mins</small
+														>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<div class="card shadow-sm">
+												<svg
+													class="bd-placeholder-img card-img-top"
+													width="100%"
+													height="225"
+													xmlns="http://www.w3.org/2000/svg"
+													role="img"
+													aria-label="Placeholder: Thumbnail"
+													preserveAspectRatio="xMidYMid slice"
+													focusable="false"
+												>
+													<title>Placeholder</title>
+													<rect
+														width="100%"
+														height="100%"
+														fill="#55595c"
+													/>
+													<text
+														x="50%"
+														y="50%"
+														fill="#eceeef"
+														dy=".3em"
+													>
+														Thumbnail
+													</text>
+												</svg>
+
+												<div class="card-body">
+													<h5 class="card-title">
+														Project title
+													</h5>
+													<p
+														class="card-text project-preview"
+													>
 														This is a short
 														description of the
 														project
@@ -207,6 +283,109 @@
 														<button
 															type="button"
 															class="btn btn-sm btn-outline-secondary"
+															onclick="window.location.href='form.html'"
+														>
+															Edit
+														</button>
+														<small
+															class="text-muted"
+															>9 mins</small
+														>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<div class="card shadow-sm">
+												<img
+													class="bd-placeholder-img card-img-top"
+													width="100%"
+													height="225"
+													xmlns="http://www.w3.org/2000/svg"
+													role="img"
+													aria-label="Placeholder: Thumbnail"
+													preserveAspectRatio="xMidYMid slice"
+													focusable="false"
+													src="https://eurekastreetfurniture.com.au/images/rp_550x550/Product/14354/TABFARMHOUSE200R.tag.0.jpg?ts=1584079059"
+												>
+													
+												</img>
+
+												<div class="card-body">
+													<h5 class="card-title">
+														Table
+													</h5>
+													<p
+														class="card-text project-preview"
+													>
+														This is a short
+														description of the
+														project
+													</p>
+													<div
+														class="d-flex justify-content-between align-items-center"
+													>
+														<button
+															type="button"
+															class="btn btn-sm btn-outline-secondary"
+															onclick="window.location.href='form.html'"
+														>
+															Edit
+														</button>
+														<small
+															class="text-muted"
+															>1 week</small
+														>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col">
+											<div class="card shadow-sm">
+												<svg
+													class="bd-placeholder-img card-img-top"
+													width="100%"
+													height="225"
+													xmlns="http://www.w3.org/2000/svg"
+													role="img"
+													aria-label="Placeholder: Thumbnail"
+													preserveAspectRatio="xMidYMid slice"
+													focusable="false"
+												>
+													<title>Placeholder</title>
+													<rect
+														width="100%"
+														height="100%"
+														fill="#55595c"
+													/>
+													<text
+														x="50%"
+														y="50%"
+														fill="#eceeef"
+														dy=".3em"
+													>
+														Thumbnail
+													</text>
+												</svg>
+
+												<div class="card-body">
+													<h5 class="card-title">
+														Project title
+													</h5>
+													<p
+														class="card-text project-preview"
+													>
+														This is a short
+														description of the
+														project
+													</p>
+													<div
+														class="d-flex justify-content-between align-items-center"
+													>
+														<button
+															type="button"
+															class="btn btn-sm btn-outline-secondary"
+															onclick="window.location.href='form.html'"
 														>
 															Edit
 														</button>
@@ -224,8 +403,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Previous Projects -->
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="panelsStayOpen-headingTwo">
 						<button
@@ -249,7 +426,7 @@
 								<div class="container">
 									<div
 										class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"
-                    id="previous-album-container"
+										id="previous-album-container"
 									>
 										<div class="col">
 											<div class="card shadow-sm">
@@ -280,8 +457,12 @@
 												</svg>
 
 												<div class="card-body">
-                          <h5 class="card-title">Project title</h3>
-													<p class="card-text">
+													<h5 class="card-title">
+														Project title
+													</h5>
+													<p
+														class="card-text project-preview"
+													>
 														This is a short
 														description of the
 														project
@@ -292,6 +473,7 @@
 														<button
 															type="button"
 															class="btn btn-sm btn-outline-secondary"
+															onclick="window.location.href='form.html'"
 														>
 															Edit
 														</button>
@@ -309,94 +491,46 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- Edit / Add -->
-				<div class="accordion-item">
-					<h2 class="accordion-header" id="panelsStayOpen-headingThree">
-						<button
-							class="accordion-button"
-							type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseThree"
-							aria-expanded="true"
-							aria-controls="panelsStayOpen-collapseTwhree"
-						>
-							Current Projects
-						</button>
-					</h2>
-					<div
-						id="panelsStayOpen-collapseThree"
-						class="accordion-collapse collapse show"
-						aria-labelledby="panelsStayOpen-headingTwhree"
-					>
-						<div class="accordion-body">
-							<form>
-								<div class="row mt-3">
-									<div class="form-group col-5">
-									<select name="material" id="material" class="form-select">
-										<option value="null">Select a material</option>
-									</select>
-									</div>
-									<div class="form-group col-3">
-										<input type="number" name="qty" id="Qty" min="0" class="form-control" placeholder="Qty">
-									</div>
-									<div class="col">
-										<input type="number" name="w" id="w" class="form-control" placeholder="w">
-									</div>
-									<div class="col">
-										<input type="number" name="h" id="h" class="form-control" placeholder="h">
-									</div>
-									<div class="col">
-										<input type="number" name="l" id="l" class="form-control" placeholder="l">
-									</div>
-									<div class="form-group col">
-										<button type="button" class="btn btn-danger">Delete</button>
-									</div>
-								</div>
-								<div class="row mt-3">
-									<div class="col">
-										<input type="text" name="name" id="name" class="form-control" placeholder="Name">
-									</div>
-									<div class="col">
-										<select name="class" id="class" class="form-select">
-											<option value="null">Select your class</option>
-										</select>
-									</div>
-									<div class="col-1">
-										<button type="button" class="btn btn-primary">+</button>
-									</div>
-								</div>
-								<div class="row mt-3 justify-content-center text-center">
-									<div class="col">
-										<button type="submit" class="btn btn-primary w-50" >Sumbit</button>
-									</div>
-									<div class="col">
-										<button type="button" class="btn btn-danger w-50" >Delete</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
 			</div>
 		</main>
 
 		<footer class="text-muted py-5">
 			<div class="container">
-				<p class="float-end mb-1">
-					<a href="#" class="text-reset">Back to top</a>
-				</p>
-				<p class="mb-1">
-					Website &copy; Aidan Matthews &amp; Elijah Rieger 2022.
-				</p>
-				<p class="mb-0">
-					Made with <a href="https://getbootstrap.com/" class="text-reset">Bootstrap</a>.
-				</p>
+				<div class="row row-cols-1 row-cols-md-3">
+					<div class="col">
+						<p class="mb-1">
+							Website &copy; Elijah Rieger &amp; Aidan Matthews
+							2022.
+						</p>
+						<p class="mb-0">
+							Made with
+							<a
+								href="https://getbootstrap.com/"
+								class="text-reset"
+								>Bootstrap</a
+							>.
+						</p>
+					</div>
+					<div class="col align-items-center hidden">
+						<div class="container visually-hidden">
+							<a href="https://www.concordia.sa.edu.au">
+								<img
+									class="top-100 start-50"
+									src="concordia-college.svg"
+									style="max-width: 80%; max-height: 80%"
+								/>
+							</a>
+						</div>
+					</div>
+					<div class="col">
+						<p class="float-end mb-1">
+							<a href="#" class="text-reset">Back to top</a>
+						</p>
+					</div>
+				</div>
 			</div>
 		</footer>
 
-    <!-- Bootstrap JS -->
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"
 			integrity="sha512-pax4MlgXjHEPfCwcJLQhigY7+N8rt6bVvWLFyUMuxShv170X53TRzGPmPkZmGBhk+jikR8WBM4yl7A9WMHHqvg=="
