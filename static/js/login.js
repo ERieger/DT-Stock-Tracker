@@ -1,5 +1,3 @@
-// This seems useful https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
-// Need to decode the JWT token from google to access all the properties
 function loginCallback(response) {   
     console.log(JSON.stringify(response.credential))
     $.ajax({
@@ -11,6 +9,10 @@ function loginCallback(response) {
 		},
 		success: function (data) {
 			console.log(data);
+			if (data == 'user exists' || data == 'Successfully added user') {
+				localStorage.setItem('IDToken', response.credential);
+				window.location.replace("http://localhost:5500/");
+			}
 		},
 		error: function (error) {
 			//Oh no! There was an error, print it.

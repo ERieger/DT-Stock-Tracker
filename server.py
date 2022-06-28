@@ -31,27 +31,46 @@ def form():
 def summary():
   return render_template('summary.html')
 
-#check if an account exists
-@app.route('/auth/exists', methods=['POST'])
-def exists():
-  # If an id is being sent to the server
-  if request.method == 'POST':
+# Function to decode JWT data - accepts a JWT object
+def decodeJWT(request):
     token = request.get_data()  #Decode the post request
-
     try:
       token = token.decode('utf-8').replace('credential=', '').strip() # Convert to UTF-8, strip whitespace
       
       token = jwt.decode(token, verify=False) # Decode the token
 
-      exists = [_ for _ in USERS.find({"_id": token['sub']})] # Searching the database to see if the account exists
-
-      if (len(exists) == 0):  # Does not exist
-        return 'user does not exist'
-      else:                   # Exists
-        return 'user exists'
+      return token
 
     except: # If there was an error (invalid token)
       return 'Account token was not valid'
+
+#check if an account exists
+@app.route('/auth/exists', methods=['POST'])
+def exists():
+  # If an id is being sent to the server
+  if request.method == 'POST':
+    token = decodeJWT(request)
+
+    if token != 'Account token was not valid':
+      exists = [_ for _ in USERS.find({"_id": token['sub']})] # Searching the database to see if the account exists
+
+      if (len(exists) == 0):  # Does not exist
+        try:
+          new_account(token)
+          return 'Successfully added user'
+        
+        except:
+          return 'Could not add user'
+      else:                   # Exists
+        return 'user exists'
+    else:
+      return 'Account token was not valid'
+
+
+# Get user role - this is a band aid solution
+@app.route('/auth/role', methods=['POST'])
+def role():
+  return
 
 #Information about a particular material
 @app.route('/material/info', methods=['POST'])
