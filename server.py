@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import mongo_uri
 import json
 from google.auth import jwt
+from rectpack import newPacker, PackingMode
 
 client = MongoClient(mongo_uri.uri)
 
@@ -66,6 +67,30 @@ def exists():
     else:
       return 'Account token was not valid'
 
+# Getting all projects which need completion
+def get_projects():
+  projects = [_ for _ in PROJECTS.find({'complete': False})]
+
+  order_list = []
+  print(projects)
+
+  for project in projects:
+    for material in project['pieces']:
+      print(material)
+      print(material['material'])
+
+#calculating the number of sheets consumed by the pieces
+def calc_sheets(sheet_dim, pieces):
+  packer = newPacker(PackingMode.Offline, True) # A new 'packer' object
+
+  packer.add_bin(sheet_dim['w'], sheet_dim['h'], count=float('inf'))  # Add sheets to the packer with dimensions of the material sheet
+
+  for p in pieces:        # for each of the pieces in the order
+    packer.add_rect(*p)   # Add the piece to the packing queue
+
+  packer.pack()           # Pack the pieces into the sheets
+
+  return len(packer)      # return the number of sheets consumed
 
 # Get user role - this is a band aid solution
 @app.route('/auth/role', methods=['POST'])
