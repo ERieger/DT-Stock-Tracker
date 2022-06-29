@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Meta properties -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta
+			name="description"
+			content="A Website to manage projects within the Design and Technologies department of Concordia College, Adelaide SA"
+		/>
+		<meta name="author" content="Aidan Matthews and Elijah Rieger" />
+
+		<title>D&T Project Manager</title>
+
+		<!-- Bootstrap core CSS -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"
+			integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+
+		<meta name="theme-color" content="#7952b3" />
+
+		<!-- placeholder image for project cards -->
+		<style>
+			.bd-placeholder-img {
+				font-size: 1.125rem;
+				text-anchor: middle;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				user-select: none;
+			}
+
+			@media (min-width: 768px) {
+				.bd-placeholder-img-lg {
+					font-size: 3.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="collapse bg-dark" id="navbarHeader">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 col-md-7 py-4">
+							<h4 class="text-white">About</h4>
+							<p class="text-muted">
+								Use this website to plan and manage your
+								Concordia College Design and Technologies
+								projects.
+							</p>
+						</div>
+						<div class="col-sm-4 offset-md-1 py-4">
+							<h4 class="text-white">Links</h4>
+							<ul class="list-unstyled">
+								<li>
+									<a
+										href="https://www.concordia.sa.edu.au/"
+										class="text-white"
+										>Login</a
+									>
+								</li>
+								<li>
+									<a
+										href="#"
+										class="text-white visually-hidden admin-actions"
+										>Manage Orders</a
+									>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="navbar navbar-dark bg-dark shadow-sm">
+				<div class="container">
+					<a href="/" class="navbar-brand d-flex align-items-center">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							fill="currentColor"
+							stroke="currentColor"
+							stroke-width="1"
+							aria-hidden="true"
+							class="me-2"
+							viewBox="0 0 24 24"
+						>
+							<path
+								d="m21.406 6.086-9-4a1.001 1.001 0 0 0-.813 0l-9 4c-.02.009-.034.024-.054.035-.028.014-.058.023-.084.04-.022.015-.039.034-.06.05a.87.87 0 0 0-.19.194c-.02.028-.041.053-.059.081a1.119 1.119 0 0 0-.076.165c-.009.027-.023.052-.031.079A1.013 1.013 0 0 0 2 7v10c0 .396.232.753.594.914l9 4c.13.058.268.086.406.086a.997.997 0 0 0 .402-.096l.004.01 9-4A.999.999 0 0 0 22 17V7a.999.999 0 0 0-.594-.914zM12 4.095 18.538 7 12 9.905l-1.308-.581L5.463 7 12 4.095zm1 15.366V11.65l7-3.111v7.812l-7 3.11z"
+							></path>
+						</svg>
+						<strong>D&T Projects</strong>
+					</a>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarHeader"
+						aria-controls="navbarHeader"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<section class="py-5 text-center container">
+				<div class="row py-lg-4">
+					<div class="col-lg-6 col-md-8 mx-auto">
+						<h1 class="fw-light">Create a new project</h1>
+						<p class="lead text-muted">
+							Use the form below to enter the detail of your
+							Design and Technologies project.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<div class="container py-4">
+				<div class="p-5 mb-4 bg-light">
+					<div class="container-fluid py-5">
+						<div class="row">
+							<div class="col">
+								<div class="form-floating mb-3">
+									<input
+										type="text"
+										class="form-control"
+										id="floatingInput"
+										placeholder="name"
+									/>
+									<label for="floatingInput"
+										>Project Name</label
+									>
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-floating">
+									<select
+										class="form-select"
+										id="floatingSelect"
+										aria-label="Floating label select example"
+									>
+										<option disabled selected hidden>
+											Please Select a Class
+										</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+									<label for="floatingSelect">Class</label>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-floating">
+									<textarea
+										class="form-control"
+										placeholder="Write a short description here"
+										id="floatingTextarea2"
+										style="height: 120px"
+									></textarea>
+									<label for="floatingTextarea2"
+										>Project Description</label
+									>
+								</div>
+							</div>
+						</div>
+						<div class="material-container container-fluid py-3">
+							<div class="row py-3">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-floating">
+													<select
+														class="form-select"
+														id="floatingSelect"
+														aria-label="Floating label select example"
+													>
+														<option
+															disabled
+															selected
+															hidden
+														>
+															Please select a
+															material
+														</option>
+														<option value="1">
+															One
+														</option>
+														<option value="2">
+															Two
+														</option>
+														<option value="3">
+															Three
+														</option>
+													</select>
+													<label for="floatingSelect"
+														>Material</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="width"
+													/>
+													<label for="floatingInput"
+														>Width</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="height"
+													/>
+													<label for="floatingInput"
+														>Height</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="length"
+														disabled
+													/>
+													<label for="floatingInput"
+														>Length</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="quantity"
+													/>
+													<label for="floatingInput"
+														>Quantity</label
+													>
+												</div>
+											</div>
+											<div class="col-md-1 mx-auto">
+												<div
+													class="btn btn-danger btn-block"
+												>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="20"
+														height="20"
+														fill="currentColor"
+														class="bi bi-trash-fill"
+														viewBox="0 0 16 16"
+													>
+														<path
+															d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+														></path>
+													</svg>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-floating">
+													<select
+														class="form-select"
+														id="floatingSelect"
+														aria-label="Floating label select example"
+													>
+														<option
+															disabled
+															selected
+															hidden
+														>
+															Please select a
+															material
+														</option>
+														<option value="1">
+															One
+														</option>
+														<option value="2">
+															Two
+														</option>
+														<option value="3">
+															Three
+														</option>
+													</select>
+													<label for="floatingSelect"
+														>Material</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="width"
+													/>
+													<label for="floatingInput"
+														>Width</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="height"
+													/>
+													<label for="floatingInput"
+														>Height</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="length"
+													/>
+													<label for="floatingInput"
+														>Length</label
+													>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-floating mb-3">
+													<input
+														type="number"
+														class="form-control"
+														id="floatingInput"
+														placeholder="quantity"
+													/>
+													<label for="floatingInput"
+														>Quantity</label
+													>
+												</div>
+											</div>
+											<div class="col-md-1 mx-auto">
+												<div
+													class="btn btn-danger btn-block"
+												>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														width="20"
+														height="20"
+														fill="currentColor"
+														class="bi bi-trash-fill"
+														viewBox="0 0 16 16"
+													>
+														<path
+															d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+														></path>
+													</svg>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div
+								class="d-grid gap-2 d-md-flex justify-content-md-end"
+							>
+								<button
+									type="button"
+									class="btn btn-success"
+									onclick="$('.material-container').newMaterial()"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-plus-square-fill"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"
+										></path>
+									</svg>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col mb-3 py-3">
+								<button
+									class="btn btn-primary btn-lg"
+									type="button"
+								>
+									Save
+								</button>
+								<button
+									class="btn btn-outline-danger btn-lg"
+									type="button"
+								>
+									Delete
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer class="text-muted py-5">
+			<div class="container">
+				<p class="float-end mb-1">
+					<a href="#" class="text-reset">Back to top</a>
+				</p>
+				<p class="mb-1">
+					Website &copy; Elijah Rieger &amp; Aidan Matthews 2022.
+				</p>
+				<p class="mb-0">
+					Made with
+					<a href="https://getbootstrap.com/" class="text-reset"
+						>Bootstrap</a
+					>.
+				</p>
+			</div>
+		</footer>
+		
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"
+			integrity="sha512-pax4MlgXjHEPfCwcJLQhigY7+N8rt6bVvWLFyUMuxShv170X53TRzGPmPkZmGBhk+jikR8WBM4yl7A9WMHHqvg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script>
+			$.fn.newMaterial = function () {
+				"use strict";
+				$(this).append(
+					"<div class='row'><div class='card'><div class='card-body'><div class='row'><div class='col-md-3'><div class='form-floating'><select class='form-select' id='floatingSelect' aria-label='Floating label select example'><option disabled selected hidden>Please select a material</option><option value='1'>One</option><option value='2'>Two</option><option value='3'>Three</option></select> <label for='floatingSelect'>Material</label></div></div><div class='col-md-2'><div class='form-floating mb-3'><input type='number' class='form-control' id='floatingInput' placeholder='width'> <label for='floatingInput'>Width</label></div></div><div class='col-md-2'><div class='form-floating mb-3'><input type='number' class='form-control' id='floatingInput' placeholder='height'> <label for='floatingInput'>Height</label></div></div><div class='col-md-2'><div class='form-floating mb-3'><input type='number' class='form-control' id='floatingInput' placeholder='length'> <label for='floatingInput'>Length</label></div></div><div class='col-md-2'><div class='form-floating mb-3'><input type='number' class='form-control' id='floatingInput' placeholder='quantity'> <label for='floatingInput'>Quantity</label></div></div><div class='col-md-1 mx-auto'><div class='btn btn-danger btn-block'><svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'><path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'></path></svg></div></div></div></div></div></div>"
+				);
+			};
+		</script>
+	</body>
+</html>
