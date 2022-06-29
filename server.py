@@ -140,7 +140,24 @@ def make_class_entry(class_name):
   class_entry['price'] = total_price
 
   return class_entry
+
+#make the overall order report
+def make_order_report(class_list):
+  report = {}
+
+  price = 0
+
+  for classes in class_list:
+    class_report = make_class_entry(classes)
+
+    price = price + class_report['price']
+
+    report[classes] = class_report
   
+  report['price'] = price
+
+  return report
+
 # Launching the flask server
 if __name__ == "__main__":
   app.run(debug=True, port=5500)
