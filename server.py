@@ -3,8 +3,8 @@ from flask import Flask, make_response, render_template, request
 from pymongo import MongoClient
 import mongo_uri
 import json
+from orderparser import OrderParser
 from google.auth import jwt
-from rectpack import newPacker, PackingMode
 
 client = MongoClient(mongo_uri.uri)
 
@@ -79,19 +79,6 @@ def get_projects():
       print(material)
       print(material['material'])
 
-#calculating the number of sheets consumed by the pieces
-def calc_sheets(sheet_dim, pieces):
-  packer = newPacker(PackingMode.Offline, True) # A new 'packer' object
-
-  packer.add_bin(sheet_dim['w'], sheet_dim['h'], count=float('inf'))  # Add sheets to the packer with dimensions of the material sheet
-
-  for p in pieces:        # for each of the pieces in the order
-    packer.add_rect(*p)   # Add the piece to the packing queue
-
-  packer.pack()           # Pack the pieces into the sheets
-
-  return len(packer)      # return the number of sheets consumed
-
 # Get user role - this is a band aid solution
 @app.route('/auth/role', methods=['POST'])
 def role():
@@ -130,6 +117,30 @@ def new_account(credential):
   # Insert the user into the database
   USERS.insert_one(new_user)
 
+#make a class entry in the order report
+def make_class_entry(class_name):
+  parser = OrderParser()
+
+  projects = PROJECTS.find({'class': class_name}, {'complete': False})
+
+  class_pieces = parser.extract_class_pieces(projects)
+
+  total_price = 0
+
+  class_entry = {}
+
+  class_entry['materials'] = {}
+
+  for piece in class_pieces:
+    material = MATERIALS.find_one({"id": piece})
+    material_entry = parser.calculate_material_costs(material, class_pieces[piece])
+    total_price = total_price + material_entry['price']
+    class_entry['materials'][piece] = material_entry
+  
+  class_entry['price'] = total_price
+
+  return class_entry
+  
 # Launching the flask server
 if __name__ == "__main__":
   app.run(debug=True, port=5500)

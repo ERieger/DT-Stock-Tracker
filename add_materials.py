@@ -25,6 +25,7 @@ while (True):
   material['type'] = type
   material['id'] = code
   material['name'] = name
+  material['price'] = price
   material['dim'] = {}
 
   if ((type==1) or (type==2)):
