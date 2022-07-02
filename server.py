@@ -82,7 +82,9 @@ def get_projects():
 # Get user role - this is a band aid solution
 @app.route('/auth/role', methods=['POST'])
 def role():
-  return
+  token = decodeJWT(request)
+  role = [_ for _ in USERS.find({"_id": token['sub']})]
+  return str(role[0]['admin'])
 
 #Information about a particular material
 @app.route('/material/info', methods=['POST'])
