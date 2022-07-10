@@ -1,10 +1,12 @@
 from fcntl import F_SEAL_SEAL
-from flask import Flask, make_response, render_template, request
+from flask import Flask, make_response, render_template, jsonify, request
 from pymongo import MongoClient
 import mongo_uri
 import json
 from orderparser import OrderParser
 from google.auth import jwt
+
+from bson.json_util import loads, dumps
 
 client = MongoClient(mongo_uri.uri)
 
@@ -66,6 +68,24 @@ def exists():
         return 'user exists'
     else:
       return 'Account token was not valid'
+
+@app.route('/projects/return', methods=['POST'])
+# Getting all projects which need completion
+def return_projects():
+  # If an id is being sent to the server
+  if request.method == 'POST':
+    token = decodeJWT(request)
+    user = USERS.find_one({"_id": token['sub']}) # Searching the database to get the user
+
+    projectResp = []
+
+    for projectID in user["projects"]: # Loop through user's projects
+      print(projectID)
+      project = PROJECTS.find_one({'_id': projectID}) # Searching the database to get the project
+      projectResp.append(project)
+      print(projectResp)
+    
+    return dumps(projectResp)                                   # Send to the client
 
 # Getting all projects which need completion
 def get_projects():
