@@ -30,11 +30,11 @@ function login_redirect(data, response) {
 			success: function (admin) {
 				console.log(admin)
 				if (admin == 'False') {
+					localStorage.setItem('admin', false);
 					window.location.replace("http://localhost:5500/");
-					localStorage.setItem('admin', admin);
 				} else {
+					localStorage.setItem('admin', true);
 					window.location.replace("http://localhost:5500/summary");
-					localStorage.setItem('admin', admin);
 				}
 			},
 			error: function (error) {

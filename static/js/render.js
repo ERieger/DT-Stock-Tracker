@@ -1,5 +1,5 @@
 window.onload = () => {
-    if (localStorage.getItem('admin') == 'False') {
+    if (localStorage.getItem('admin') == 'false') {
         console.log('Not an admin');
 
         $.ajax({
@@ -71,7 +71,7 @@ function render_projects(data) {
                 </div>
             </div>
         </div>`);
-        } else {
+        } else { // Project already fulfilled
             $('#previous-album-container').append(`
             <div class="col">
                 <div class="card shadow-sm">
