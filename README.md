@@ -17,7 +17,7 @@
 ```git
 git clone https://github.com/ERieger/DT-Stock-Tracker.git
 ```
-2) Create mongo_uri.py file in the root folder containing a valid database connection string.
+2) Create `mongo_uri.py` file in the root folder containing a valid database connection string.
 ```python
 uri = [YOUR VALID CONNECTION STRING]
 ```
