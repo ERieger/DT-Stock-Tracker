@@ -1,5 +1,6 @@
 <h1 align="center">DT-Stock-Tracker</h1>
 <p align="center">DT-Stock-Tracker is an open source and fully self hosted system for automating the process of material ordering. It has been custom built using robust technologies.</p>
+
 ## Overview
 * **Robust -** Built with well tested and trusted technologies such as Flask, jQuery, Bootstrap, and MongoDB.
 * **Fully Self Hosted -** The application can be deployed wherever you choose - it doesn't rely on a single external hosting service.
