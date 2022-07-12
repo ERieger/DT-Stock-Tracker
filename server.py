@@ -1,5 +1,7 @@
 from fcntl import F_SEAL_SEAL
+from bson import ObjectId
 from flask import Flask, make_response, render_template, jsonify, request
+from numpy import promote_types
 from pymongo import MongoClient
 import mongo_uri
 import json
@@ -36,7 +38,8 @@ def summary():
 
 # Function to decode JWT data - accepts a JWT object
 def decodeJWT(request):
-    token = request.get_data()  #Decode the post request
+    token = request  #Decode the post request
+
     try:
       token = token.decode('utf-8').replace('credential=', '').strip() # Convert to UTF-8, strip whitespace
       
@@ -52,7 +55,7 @@ def decodeJWT(request):
 def exists():
   # If an id is being sent to the server
   if request.method == 'POST':
-    token = decodeJWT(request)
+    token = decodeJWT(request.get_data())
 
     if token != 'Account token was not valid':
       exists = [_ for _ in USERS.find({"_id": token['sub']})] # Searching the database to see if the account exists
@@ -74,25 +77,36 @@ def exists():
 def return_projects():
   # If an id is being sent to the server
   if request.method == 'POST':
-    token = decodeJWT(request)
+    token = decodeJWT(request.get_data())
     user = USERS.find_one({"_id": token['sub']}) # Searching the database to get the user
 
     projectResp = []
 
     for projectID in user["projects"]: # Loop through user's projects
-      print(projectID)
       project = PROJECTS.find_one({'_id': projectID}) # Searching the database to get the project
       projectResp.append(project)
-      print(projectResp)
     
-    return dumps(projectResp)                                   # Send to the client
+    return dumps(projectResp)           # Send to the client
+
+@app.route('/projects/add', methods=['POST'])
+def add_project():
+  if request.method == 'POST':
+    data = request.get_json()["data"]
+    credential = request.get_json()["credential"]
+    token = decodeJWT(credential)
+    print(token)
+    data["_id"] = ObjectId()
+    query = {"_id": token["sub"]}
+    values = {"$push": {"projects": data["_id"]}}
+    USERS.update_one(query, values)
+    PROJECTS.insert_one(data)
+    return 'success'
 
 # Getting all projects which need completion
 def get_projects():
   projects = [_ for _ in PROJECTS.find({'complete': False})]
 
   order_list = []
-  print(projects)
 
   for project in projects:
     for material in project['pieces']:
@@ -102,7 +116,7 @@ def get_projects():
 # Get user role - this is a band aid solution
 @app.route('/auth/role', methods=['POST'])
 def role():
-  token = decodeJWT(request)
+  token = decodeJWT(request.get_data())
   role = [_ for _ in USERS.find({"_id": token['sub']})]
   return str(role[0]['admin'])
 
@@ -115,11 +129,20 @@ def material_info():
 #A list of the available materials in the database
 @app.route('/material/list')
 def material_list():
-  materials = [_['name'] for _ in MATERIALS.find()] # Query the database
+  materialArr = []
+  for material in MATERIALS.find():
+    materials = {}
+    materials = {
+      "id": material['id'],
+      "type": material['type'],
+      "name": material['name'],
+      "dim": material['dim']
+    }
+    materialArr.append(materials)
 
-  response = make_response(json.dumps(materials))   # Format the list of materials
+  response = make_response(json.dumps(materialArr))   # Format the list of materials
   response.content_type = 'application/json'        # Set response type
-  return response                                   # Send to the client
+  return response
 
 @app.route('/login')
 def login():

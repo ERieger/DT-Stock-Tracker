@@ -27,7 +27,7 @@ window.onload = () => {
 function render_projects(data) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].complete == false) { // If project is awaiting fulfillment
-            console.log(data[i]);
+            // console.log(data[i]);
             $('#current-album-container').append(`
             <div class="col">
                 <div class="card shadow-sm">
