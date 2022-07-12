@@ -1,3 +1,11 @@
+# This script defines the class used to generate order reports
+# This includes calculating price and material usage
+# Methods:
+#   calculate_sheets - calculate the number of sheets required to make a set of pieces
+#   expand           - Converting the object of pieces from an order to the corrent format for the calculate_sheets method
+#   calculate_material_costs - Calculating the cost of a given quantity of material
+#   extract_class_pieces - extracing a list of pieces from a class list of projects
+
 from rectpack import newPacker, PackingMode
 
 class OrderParser:

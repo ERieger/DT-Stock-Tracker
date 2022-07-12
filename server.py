@@ -37,18 +37,14 @@ def summary():
   return render_template('summary.html')
 
 # Function to decode JWT data - accepts a JWT object
-def decodeJWT(request):
-    token = request  #Decode the post request
+def decodeJWT(token):
+  try:
+    token = jwt.decode(token, verify=False) # Decode the token
 
-    try:
-      token = token.decode('utf-8').replace('credential=', '').strip() # Convert to UTF-8, strip whitespace
-      
-      token = jwt.decode(token, verify=False) # Decode the token
+    return token
 
-      return token
-
-    except: # If there was an error (invalid token)
-      return 'Account token was not valid'
+  except: # If there was an error (invalid token)
+    return 'Account token was not valid'
 
 #check if an account exists
 @app.route('/auth/exists', methods=['POST'])
@@ -91,10 +87,10 @@ def return_projects():
 @app.route('/projects/add', methods=['POST'])
 def add_project():
   if request.method == 'POST':
-    data = request.get_json()["data"]
-    credential = request.get_json()["credential"]
+    requestJSON = request.get_json()
+    data = requestJSON["data"]
+    credential = requestJSON["credential"]
     token = decodeJWT(credential)
-    print(token)
     data["_id"] = ObjectId()
     query = {"_id": token["sub"]}
     values = {"$push": {"projects": data["_id"]}}

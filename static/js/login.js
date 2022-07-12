@@ -4,9 +4,8 @@ function loginCallback(response) {
 		async: false, //We do not want this to be asynchonous, otherwise data will not be returned
 		method: "POST",
 		url: "/auth/exists",
-		data: {
-			credential: String(response.credential) //ensure sql is a string
-		},
+		data: String(response.credential),
+		contentType: 'application/json',
 		success: function (data) {
 			login_redirect(data, response);
 		},
@@ -24,9 +23,7 @@ function login_redirect(data, response) {
 			async: false, //We do not want this to be asynchonous, otherwise data will not be returned
 			method: "POST",
 			url: "/auth/role",
-			data: {
-				credential: String(response.credential) //ensure sql is a string
-			},
+			data: String(response.credential),
 			success: function (admin) {
 				console.log(admin)
 				if (admin == 'False') {

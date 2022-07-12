@@ -6,9 +6,7 @@ window.onload = () => {
             async: false, //We do not want this to be asynchonous, otherwise data will not be returned
             method: "POST",
             url: "/projects/return",
-            data: {
-                credential: String(localStorage.getItem('IDToken')) //ensure sql is a string
-            },
+            data: String(localStorage.getItem('IDToken')),
             success: function (data) {
                 render_projects(JSON.parse(data));
             },
