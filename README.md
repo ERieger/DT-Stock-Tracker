@@ -14,9 +14,19 @@
 * Domain
 ## Installation and Usage
 1) Clone the project
-```git clone https://github.com/ERieger/DT-Stock-Tracker.git```
+```git
+git clone https://github.com/ERieger/DT-Stock-Tracker.git
+```
 2) Create mongo_uri.py file in the root folder containing a valid database connection string.
-```uri = [YOUR VALID CONNECTION STRING]```
-3) Install all required dependencies with `pip3 install -R requirements.txt`.
-4) Start the server with `python3 server.py`.
-5) For testing navigate to `localhost:5500/login` (or the domain configured in your google oAuth flow.
+```python
+uri = [YOUR VALID CONNECTION STRING]
+```
+3) Install all required dependencies with
+```bash
+pip3 install -R requirements.txt
+```
+6) Start the server with:
+```bash
+python3 server.py
+```
+7) For testing navigate to `localhost:5500/login` (or the domain configured in your google oAuth flow.
