@@ -12,9 +12,11 @@ function add_project() {
     }
 
     $('.material-container div.card').each(function () {
+        let material = $(this).find('#materialSelect').val();
+
         let piece = {
-            material: $(this).find('#materialSelect').val(),
-            type: undefined,
+            material: material,
+            type: materials.find(x => x.id === material).type,
             w: Number($(this).find('#width').val()),
             l: Number($(this).find('#length').val()),
             h: Number($(this).find('#height').val()),
@@ -334,7 +336,7 @@ window.onload = () => {
         async: false, //We do not want this to be asynchonous, otherwise data will not be returned
         url: "/material/list",
         success: function (response) {
-            // console.log(response);
+            console.log(response);
             materials = response;
         },
         error: function (error) {
