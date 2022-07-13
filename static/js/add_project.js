@@ -34,7 +34,6 @@ function add_project() {
         }),
         contentType: 'application/json',
         success: function (response) {
-            console.log(response);
             if (response == 'success') {
                 window.location.href = "http://localhost:5500/"
             }
@@ -48,19 +47,20 @@ function add_project() {
 }
 
 $.fn.update_disabled = function () {
-    console.log(this)
     let parents = $(this).parentsUntil('div.card-body');
     let inputs = {
         width: $(parents[2]).find('input#width'),
         height: $(parents[2]).find('input#height'),
-        length: $(parents[2]).find('input#length')
+        length: $(parents[2]).find('input#length'),
+        selects: $(parents[2]).find('select#materialSelect')
     }
-    $(parents[2]).find('input').each(function (index) {
+
+    $(parents).find('input').each(function () {
         $(this).prop('disabled', false);
     });
 
     for (let i = 0; i < materials.length; i++) {
-        if (materials[i].id == this.value) {
+        if (materials[i].id == $(inputs.selects).val()) {
             switch (materials[i].type) {
                 case 1: // Board
                     $(inputs.height).prop('disabled', true);
@@ -91,7 +91,7 @@ $.fn.update_disabled = function () {
 }
 
 $.fn.newMaterial = function (piece) {
-    if (piece != undefined || piece != null) {
+    if (piece != undefined || piece != null) { // Rendering a piece
         $(this).append(`
         <div class="row py-3" id="material-card">
             <div class="card">
@@ -104,15 +104,6 @@ $.fn.newMaterial = function (piece) {
                                     id="materialSelect"
                                     aria-label="Floating label select example"
                                 >
-                                    <option
-                                        disabled
-                                        selected
-                                        hidden
-                                    >
-                                        Please select a
-                                        material
-                                    </option>
-                                    ${populate_materials()}
                                 </select>
                                 <label for="materialSelect"
                                     >Material
@@ -198,7 +189,15 @@ $.fn.newMaterial = function (piece) {
                 </div>
             </div>
         </div>`);
-    } else {
+
+        populate_materials(piece, this);
+        
+        $(this).find('div.card-body').last().each(function () {
+            $($(this)).update_disabled(); 
+            console.log($(this));
+        });
+
+    } else { // Rendering a blank piece
         $(this).append(`
         <div class="row py-3" id="material-card">
             <div class="card">
@@ -303,17 +302,30 @@ $.fn.newMaterial = function (piece) {
         </div>`);
     }
 
+
     $('select').off('change');
-    $('select').on('change', $(this).update_disabled());
+    $('select').on('change', function () { $(this).update_disabled() });
 };
 
-function populate_materials() {
+function populate_materials(piece, elem) {
     let options = '';
-    for (let i = 0; i < materials.length; i++) {
-        options += `<option value="${materials[i].id}">${materials[i].name}</option>`;
+
+    if (piece != undefined || piece != null) {
+        $(elem).find('select#materialSelect').last().each(function () {
+            for (let i = 0; i < materials.length; i++) {
+                $(this).append(`<option value="${materials[i].id}">${materials[i].name}</option>`);
+            }
+        });
+        $(elem).find('select#materialSelect').last().val(piece.material)
+        // console.log($(elem).find('select#materialSelect').last().val());
+    } else {
+        for (let i = 0; i < materials.length; i++) {
+            options += `<option value="${materials[i].id}">${materials[i].name}</option>`;
+        }
+
+        return options;
     }
 
-    return options;
 }
 
 function delete_material(elem) { $(elem).parents('div.material-container').find('div#material-card').length > 1 ? $(elem).parents('div#material-card').remove() : console.log('How about no...') };
@@ -324,6 +336,7 @@ window.onload = () => {
         async: false, //We do not want this to be asynchonous, otherwise data will not be returned
         url: "/material/list",
         success: function (response) {
+            // console.log(response);
             materials = response;
         },
         error: function (error) {
@@ -333,7 +346,6 @@ window.onload = () => {
     });
 
     let editProject = JSON.parse(localStorage.getItem('project'));
-    console.log(editProject);
 
     if (editProject == null || editProject == undefined) { // Not editing an existing project
         $('.material-container').newMaterial() // Add first material box
@@ -343,10 +355,9 @@ window.onload = () => {
         $('#projectDesc').val(editProject.desc);
 
         editProject.pieces.forEach(function (piece) {
-            console.log(piece);
             $('.material-container').newMaterial(piece);
         });
 
-        // localStorage.removeItem('project');
+        localStorage.removeItem('project');
     }
 };
