@@ -191,12 +191,6 @@ $.fn.newMaterial = function (piece) {
         </div>`);
 
         populate_materials(piece, this);
-        
-        $(this).find('div.card-body').last().each(function () {
-            $($(this)).update_disabled(); 
-            console.log($(this));
-        });
-
     } else { // Rendering a blank piece
         $(this).append(`
         <div class="row py-3" id="material-card">
@@ -305,6 +299,10 @@ $.fn.newMaterial = function (piece) {
 
     $('select').off('change');
     $('select').on('change', function () { $(this).update_disabled() });
+    $(this).find('select#materialSelect').last().each(function () {
+        $($(this)).update_disabled(); 
+        console.log($(this));
+    });
 };
 
 function populate_materials(piece, elem) {
