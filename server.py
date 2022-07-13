@@ -98,6 +98,16 @@ def add_project():
     PROJECTS.insert_one(data)
     return 'success'
 
+@app.route('/projects/edit', methods=['POST'])
+def edit_project():
+  if request.method == 'POST':
+    requestJSON = request.get_json()
+    data = requestJSON["data"]
+    query = {"_id": ObjectId(data["_id"])}
+    del data["_id"]
+    PROJECTS.replace_one(query, data)
+    return 'success'
+
 # Getting all projects which need completion
 def get_projects():
   projects = [_ for _ in PROJECTS.find({'complete': False})]

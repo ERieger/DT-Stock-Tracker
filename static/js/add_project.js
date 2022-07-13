@@ -1,53 +1,5 @@
 let materials;
 
-function add_project() {
-    let project = {
-        _id: undefined,
-        name: $('#projectName').val(),
-        class: $('#projectClass').val(),
-        desc: $('#projectDesc').val(),
-        thumb: 'https://i.quotev.com/img/q/u/18/10/21/g7fp3vu7ce.jpg',
-        pieces: [],
-        complete: false
-    }
-
-    $('.material-container div.card').each(function () {
-        let material = $(this).find('#materialSelect').val();
-
-        let piece = {
-            material: material,
-            type: materials.find(x => x.id === material).type,
-            w: Number($(this).find('#width').val()),
-            l: Number($(this).find('#length').val()),
-            h: Number($(this).find('#height').val()),
-            qty: Number($(this).find('#qty').val())
-        }
-
-        project.pieces.push(piece);
-    });
-
-    $.ajax({
-        async: false, //We do not want this to be asynchonous, otherwise data will not be returned
-        method: "POST",
-        url: "/projects/add",
-        data: JSON.stringify({
-            credential: localStorage.getItem('IDToken'),
-            data: project,
-        }),
-        contentType: 'application/json',
-        success: function (response) {
-            if (response == 'success') {
-                window.location.href = "http://localhost:5500/"
-            }
-        },
-        error: function (error) {
-            //Oh no! There was an error, print it.
-            console.log(error); newMaterial
-
-        }
-    });
-}
-
 $.fn.update_disabled = function () {
     let parents = $(this).parentsUntil('div.card-body');
     let inputs = {
@@ -301,10 +253,7 @@ $.fn.newMaterial = function (piece) {
 
     $('select').off('change');
     $('select').on('change', function () { $(this).update_disabled() });
-    $(this).find('select#materialSelect').last().each(function () {
-        $($(this)).update_disabled(); 
-        console.log($(this));
-    });
+    $(this).find('select#materialSelect').last().each(function () { $($(this)).update_disabled(); });
 };
 
 function populate_materials(piece, elem) {
@@ -331,7 +280,6 @@ function populate_materials(piece, elem) {
 function delete_material(elem) { $(elem).parents('div.material-container').find('div#material-card').length > 1 ? $(elem).parents('div#material-card').remove() : console.log('How about no...') };
 
 window.onload = () => {
-    $('#save-btn').click(() => { add_project() }); // Add an action to the save button
     $.ajax({
         async: false, //We do not want this to be asynchonous, otherwise data will not be returned
         url: "/material/list",
@@ -349,15 +297,115 @@ window.onload = () => {
 
     if (editProject == null || editProject == undefined) { // Not editing an existing project
         $('.material-container').newMaterial() // Add first material box
+        $('#save-btn').click(() => { add_project() }); // Add an action to the save button
     } else { // Editing an existing project
         $('#projectName').val(editProject.name);
         $('#projectClass').val(editProject.class);
         $('#projectDesc').val(editProject.desc);
-
+        
         editProject.pieces.forEach(function (piece) {
             $('.material-container').newMaterial(piece);
         });
 
+        sessionStorage.setItem('_id', editProject["_id"]["$oid"]);
+        
+        $('#save-btn').click(() => { edit_project() }); // Add an action to the save button
         localStorage.removeItem('project');
     }
 };
+
+function add_project() {
+    let project = {
+        _id: undefined,
+        name: $('#projectName').val(),
+        class: $('#projectClass').val(),
+        desc: $('#projectDesc').val(),
+        thumb: 'https://i.quotev.com/img/q/u/18/10/21/g7fp3vu7ce.jpg',
+        pieces: [],
+        complete: false
+    }
+
+    $('.material-container div.card').each(function () {
+        let material = $(this).find('#materialSelect').val();
+
+        let piece = {
+            material: material,
+            type: materials.find(x => x.id === material).type,
+            w: Number($(this).find('#width').val()),
+            l: Number($(this).find('#length').val()),
+            h: Number($(this).find('#height').val()),
+            qty: Number($(this).find('#qty').val())
+        }
+
+        project.pieces.push(piece);
+    });
+
+    $.ajax({
+        async: false, //We do not want this to be asynchonous, otherwise data will not be returned
+        method: "POST",
+        url: "/projects/add",
+        data: JSON.stringify({
+            credential: localStorage.getItem('IDToken'),
+            data: project,
+        }),
+        contentType: 'application/json',
+        success: function (response) {
+            if (response == 'success') {
+                window.location.href = "http://localhost:5500/"
+            }
+        },
+        error: function (error) {
+            //Oh no! There was an error, print it.
+            console.log(error);
+
+        }
+    });
+}
+
+function edit_project() {
+    let project = {
+        _id: sessionStorage.getItem('_id'),
+        name: $('#projectName').val(),
+        class: $('#projectClass').val(),
+        desc: $('#projectDesc').val(),
+        thumb: 'https://i.quotev.com/img/q/u/18/10/21/g7fp3vu7ce.jpg',
+        pieces: [],
+        complete: false
+    }
+
+    $('.material-container div.card').each(function () {
+        let material = $(this).find('#materialSelect').val();
+
+        let piece = {
+            material: material,
+            type: materials.find(x => x.id === material).type,
+            w: Number($(this).find('#width').val()),
+            l: Number($(this).find('#length').val()),
+            h: Number($(this).find('#height').val()),
+            qty: Number($(this).find('#qty').val())
+        }
+
+        project.pieces.push(piece);
+    });
+
+    $.ajax({
+        async: false, //We do not want this to be asynchonous, otherwise data will not be returned
+        method: "POST",
+        url: "/projects/edit",
+        data: JSON.stringify({
+            credential: localStorage.getItem('IDToken'),
+            data: project,
+        }),
+        contentType: 'application/json',
+        success: function (response) {
+            if (response == 'success') {
+                window.location.href = "http://localhost:5500/"
+            }
+        },
+        error: function (error) {
+            //Oh no! There was an error, print it.
+            console.log(error);
+
+        }
+    });
+}

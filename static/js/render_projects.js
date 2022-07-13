@@ -9,6 +9,7 @@ window.onload = () => {
             data: String(localStorage.getItem('IDToken')),
             success: function (data) {
                 render_projects(JSON.parse(data));
+                console.log(JSON.parse(data));
             },
             error: function (error) {
                 //Oh no! There was an error, print it.
@@ -62,7 +63,7 @@ function render_projects(data) {
                         </button>
                         <small
                             class="text-muted"
-                            >1 week</small
+                            >ID: ${data[i]["_id"]["$oid"]}</small
                         >
                     </div>
                 </div>
@@ -103,7 +104,7 @@ function render_projects(data) {
                     >
                         <small
                             class="text-muted"
-                            >1 week</small
+                            >ID: ${data[i]["_id"]["$oid"]}</small
                         >
                     </div>
                 </div>
