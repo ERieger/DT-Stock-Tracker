@@ -25,7 +25,6 @@ window.onload = () => {
 function render_projects(data) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].complete == false) { // If project is awaiting fulfillment
-            // console.log(data[i]);
             $('#current-album-container').append(`
             <div class="col">
                 <div class="card shadow-sm">
@@ -57,7 +56,7 @@ function render_projects(data) {
                         <button
                             type="button"
                             class="btn btn-sm btn-outline-secondary"
-                            onclick="window.location.href='form'"
+                            id="${data[i]["_id"]["$oid"]}"
                         >
                             Edit
                         </button>
@@ -69,6 +68,10 @@ function render_projects(data) {
                 </div>
             </div>
         </div>`);
+
+            $(`button#${data[i]["_id"]["$oid"]}`).click(function () {
+                edit_project(data[i]);
+            });
         } else { // Project already fulfilled
             $('#previous-album-container').append(`
             <div class="col">
@@ -98,13 +101,6 @@ function render_projects(data) {
                     <div
                         class="d-flex justify-content-between align-items-center"
                     >
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-outline-secondary"
-                            onclick="window.location.href='form'"
-                        >
-                            Edit
-                        </button>
                         <small
                             class="text-muted"
                             >1 week</small
@@ -115,4 +111,8 @@ function render_projects(data) {
         </div>`);
         }
     }
+}
+
+function return_call(data) {
+    return JSON.stringify(data);
 }
