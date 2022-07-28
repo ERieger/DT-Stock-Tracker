@@ -1,4 +1,5 @@
 from fcntl import F_SEAL_SEAL
+from urllib import response
 from bson import ObjectId
 from flask import Flask, make_response, render_template, jsonify, request
 from numpy import promote_types
@@ -107,6 +108,13 @@ def edit_project():
     del data["_id"]
     PROJECTS.replace_one(query, data)
     return 'success'
+
+@app.route('/projects/report', methods=['POST'  ])
+def generate_report():
+  if request.method == 'POST':
+    response = make_response(json.dumps(make_order_report(['1','2'])))
+    response.content_type = 'application/json'
+    return response
 
 # Getting all projects which need completion
 def get_projects():

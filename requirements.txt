@@ -2,4 +2,4 @@ numpy
 flask
 google-auth
 pymongo
-rectpack
+XlsxWriter
