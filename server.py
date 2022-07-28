@@ -69,6 +69,22 @@ def exists():
     else:
       return 'Account token was not valid'
 
+# Delete the project
+@app.route('/projects/delete', methods=['POST'])
+def delete_project():
+  req = request.get_json()
+  project = req["data"]
+  print(project)
+  usr = decodeJWT(req["credential"])["sub"]
+  print(type(usr))
+  filter = {"_id": usr}
+  value = {"$pull": {'projects': ObjectId(project)}}
+  print("project: " + project)
+  print("update: " + str(filter) + ", " + str(value))
+  PROJECTS.delete_one({"_id": ObjectId(project)})
+  USERS.update_one(filter, value)
+  return 'Successfully deleted!'
+
 @app.route('/projects/return', methods=['POST'])
 # Getting all projects which need completion
 def return_projects():
@@ -104,7 +120,7 @@ def edit_project():
   if request.method == 'POST':
     requestJSON = request.get_json()
     data = requestJSON["data"]
-    query = {"_id": ObjectId(data["_id"])}
+    query = {"_id": data["_id"]}
     del data["_id"]
     PROJECTS.replace_one(query, data)
     return 'success'

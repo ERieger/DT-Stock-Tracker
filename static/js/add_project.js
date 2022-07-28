@@ -134,7 +134,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                         <div class="col-md-1 mx-auto">
                             <div
                                 class="btn btn-danger btn-block"
-                                onclick="$(this).parents('div.material-container').find('div#material-card').length > 1 ? $(this).parents('div#material-card').remove() : console.log('How about no...')"
+                                onclick="delete_material(this)"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +244,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                         <div class="col-md-1 mx-auto">
                             <div
                                 class="btn btn-danger btn-block"
-                                onclick="$(this).parents('div.material-container').find('div#material-card').length > 1 ? $(this).parents('div#material-card').remove() : console.log('How about no...')"
+                                onclick="delete_material(this)"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +285,7 @@ function populate_materials(piece, elem) {
                 $(this).append(`<option value="${materials[i].id}">${materials[i].name}</option>`);
             }
         });
-        
+
         // Set the value of the dropdown
         $(elem).find('select#materialSelect').last().val(piece.material)
     } else { // Blank material
@@ -322,16 +322,21 @@ window.onload = () => { // On window load
     });
 
     let editProject = JSON.parse(localStorage.getItem('project')); // Get the project from local storate
+    console.log(editProject);
 
     if (editProject == null || editProject == undefined) { // Not editing an existing project
         $('.material-container').newMaterial() // Add first material box
         $('#save-btn').click(() => { add_project() }); // Add an action to the save button
+        $('#delete-btn').click(() => { delete_project() });
     } else { // Editing an existing project
         // Set various fields to defined 
         $('#projectName').val(editProject.name);
         $('#projectClass').val(editProject.class);
         $('#projectDesc').val(editProject.desc);
-        
+
+        $('#delete-btn').click(() => { delete_project(editProject["_id"].$oid) });
+        console.log(typeof(editProject["_id"].$oid));
+
         // Loop through materials and spawn a new row parseing the material
         editProject.pieces.forEach(function (piece) {
             $('.material-container').newMaterial(piece);
@@ -339,7 +344,7 @@ window.onload = () => { // On window load
 
         // Save ID to session storage for when you submit the edit
         sessionStorage.setItem('_id', editProject["_id"]["$oid"]);
-        
+
         $('#save-btn').click(() => { edit_project() }); // Add an action to the save button
         localStorage.removeItem('project'); // Remove object from local storage
     }
