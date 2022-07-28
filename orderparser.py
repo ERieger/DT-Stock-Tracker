@@ -102,6 +102,7 @@ class OrderParser:
 
         return collated_list
 
+    # Creating an excel document of the report report
     def create_excel_report(self, order):
         reportPath = f"./order_reports/DT_order-{datetime.date(datetime.now())}.xlsx"
         print(reportPath)

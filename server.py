@@ -99,6 +99,7 @@ def return_projects():
       project = PROJECTS.find_one({'_id': projectID}) # Searching the database to get the project
       projectResp.append(project)
     
+    print(projectResp)
     return dumps(projectResp)           # Send to the client
 
 @app.route('/projects/add', methods=['POST'])
@@ -128,20 +129,9 @@ def edit_project():
 @app.route('/projects/report', methods=['POST'  ])
 def generate_report():
   if request.method == 'POST':
-    response = make_response(json.dumps(make_order_report(['1','2'])))
+    response = make_response(json.dumps(make_order_report(['1','2','3'])))
     response.content_type = 'application/json'
     return response
-
-# Getting all projects which need completion
-def get_projects():
-  projects = [_ for _ in PROJECTS.find({'complete': False})]
-
-  order_list = []
-
-  for project in projects:
-    for material in project['pieces']:
-      print(material)
-      print(material['material'])
 
 # Get user role - this is a band aid solution
 @app.route('/auth/role', methods=['POST'])
@@ -196,7 +186,7 @@ def new_account(credential):
 def make_class_entry(class_name):
   parser = OrderParser()
 
-  projects = PROJECTS.find({'class': class_name}, {'complete': False})
+  projects = PROJECTS.find({"$and": [{"class": class_name}, {"complete": False}]})
 
   class_pieces = parser.extract_class_pieces(projects)
 

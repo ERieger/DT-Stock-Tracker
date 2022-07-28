@@ -1,7 +1,8 @@
+/* Fetch the summary report from the server */
 $.fn.fetch_summary = function () {
   "use strict";
 
-  let project = $.ajax({
+  let project = $.ajax({  //sending a POST request to retrieve the JSON object
     async: false,
     method: "POST",
     url: "/projects/report",
@@ -10,25 +11,26 @@ $.fn.fetch_summary = function () {
     }
   });
 
-  return project.responseJSON;
+  return project.responseJSON; //return the JSON in the POST return object
 };
 
+/* Append a table row for each material entry */
 $.fn.create_material_table = function (class_pieces, element) {
   "use strict";
 
-  let table_container = $(this);
+  let table_container = $(this);  //The container for all tables
 
-  let material = class_pieces[element];
+  let material = class_pieces[element]; //The material to be appended
 
-  switch (material.type) {
+  switch (material.type) {  //Append to a different subtable based on type
     case 1:
       table_container.children('.board-summary').append(
         `
         <tr>
           <td>${element}</td>
-          <td>${material.area}</td>
+          <td>${material.area}mm²</td>
           <td>${material.sheets}</td>
-          <td>${material.price}</td>
+          <td>$${material.price}</td>
         </tr>
         `
       );
@@ -39,7 +41,7 @@ $.fn.create_material_table = function (class_pieces, element) {
         <tr>
           <td>${element}</td>
           <td>${material.l}</td>
-          <td>${material.price}</td>
+          <td>$${material.price}</td>
         </tr>
         `
       );
@@ -50,7 +52,7 @@ $.fn.create_material_table = function (class_pieces, element) {
         <tr>
           <td>${element}</td>
           <td>${material.l}</td>
-          <td>${material.price}</td>
+          <td>$${material.price}</td>
         </tr>
         `
       );
@@ -58,24 +60,24 @@ $.fn.create_material_table = function (class_pieces, element) {
   }
 }
 
+/* Create the summary page */
 $.fn.render_summary = function () {
   "use strict";
 
-  let container = $(this);
+  let container = $(this);  //container for new accordians
 
-  let report = this.fetch_summary();
+  let report = this.fetch_summary();  //Fetch the summary object
 
-  let classes = Object.keys(report).filter(item => item !== 'price');
+  let classes = Object.keys(report).filter(item => item !== 'price'); //Extract class names from the report
 
-  console.log(report);
+  $("#summary-heading").text(`Order Summary - $${report.price}`)  //Update the total price in the report heading
 
-  $("#summary-heading").text(`Order Summary - $${report.price}`)
-
-  for (var i=0; i<classes.length; i++) {
+  for (var i=0; i<classes.length; i++) {  //for each of the classes
 
     let class_info = report[classes[i]];
-    let class_pieces = class_info['materials'];
+    let class_pieces = class_info['materials']; //each material entry in the class report
 
+    //Create a new accordian for the class
     container.append(
       `<div class="accordion" id="mainAccordion">
       <div class="accordion-item">
@@ -97,6 +99,7 @@ $.fn.render_summary = function () {
           aria-labelledby="panelsStayOpen-heading${i}"
         >
           <div class="${classes[i]}-container accordion-body">
+            <h3>Boards</h3>
             <table class="table table-sm table-striped table-hover">
               <thead>
                 <tr>
@@ -109,6 +112,7 @@ $.fn.render_summary = function () {
               <tbody class="board-summary">
               </tbody>
             </table>
+            <h3>Planks</h3>
             <table class="table table-sm table-striped table-hover">
               <thead>
                 <tr>
@@ -120,6 +124,7 @@ $.fn.render_summary = function () {
               <tbody class="plank-summary">
               </tbody>
             </table>
+            <h3>Dowels</h3>
             <table class="table table-sm table-striped table-hover">
               <thead>
                 <tr>
@@ -137,12 +142,14 @@ $.fn.render_summary = function () {
     </div>`
     );
 
+    //For each of the material entries
     Object.keys(class_pieces).forEach(element => {
-      $(`.${classes[i]}-container table`).create_material_table(class_pieces, element);
+      $(`.${classes[i]}-container table`).create_material_table(class_pieces, element); //Add a new row to the material's table
     });
   }
 };
 
+/* When the page is loaded, generate the report */
 $(document).ready(function () {
   $('.report-container').render_summary();
 });
