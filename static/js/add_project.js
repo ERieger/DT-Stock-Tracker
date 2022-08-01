@@ -321,6 +321,19 @@ function populate_materials(piece, elem) {
 function delete_material(elem) { $(elem).parents('div.material-container').find('div#material-card').length > 1 ? $(elem).parents('div#material-card').remove() : console.log('How about no...') };
 
 window.onload = () => { // On window load
+    if (localStorage.getItem('IDToken') != undefined || localStorage.getItem('IDToken') != null) {
+        if (localStorage.getItem('admin') == 'false') {
+            console.log('Not an admin');
+
+            // Render normal user page
+        } else {
+            console.log('Admin')
+            // Render anything for admin...
+        }
+    } else {
+        window.location.replace('http://localhost:5500/login')
+    }
+    
     $.ajax({
         async: false, //We do not want this to be asynchonous, otherwise data will not be returned
         url: "/material/list",
@@ -347,7 +360,7 @@ window.onload = () => { // On window load
         $('#projectDesc').val(editProject.desc);
 
         $('#delete-btn').click(() => { delete_project(editProject["_id"].$oid) });
-        console.log(typeof(editProject["_id"].$oid));
+        console.log(typeof (editProject["_id"].$oid));
 
         // Loop through materials and spawn a new row parseing the material
         editProject.pieces.forEach(function (piece) {

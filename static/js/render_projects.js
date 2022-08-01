@@ -1,25 +1,29 @@
 window.onload = () => {
-    if (localStorage.getItem('admin') == 'false') {
-        console.log('Not an admin');
-
-        $.ajax({
-            async: false, //We do not want this to be asynchonous, otherwise data will not be returned
-            method: "POST",
-            url: "/projects/return",
-            data: String(localStorage.getItem('IDToken')),
-            success: function (data) {
-                render_projects(JSON.parse(data));
-                console.log(JSON.parse(data));
-            },
-            error: function (error) {
-                //Oh no! There was an error, print it.
-                console.log(error);
-            },
-        });
-        // Render normal user page
+    if (localStorage.getItem('IDToken') != undefined || localStorage.getItem('IDToken') != null) {
+        if (localStorage.getItem('admin') == 'false') {
+            console.log('Not an admin');
+    
+            $.ajax({
+                async: false, //We do not want this to be asynchonous, otherwise data will not be returned
+                method: "POST",
+                url: "/projects/return",
+                data: String(localStorage.getItem('IDToken')),
+                success: function (data) {
+                    render_projects(JSON.parse(data));
+                    console.log(JSON.parse(data));
+                },
+                error: function (error) {
+                    //Oh no! There was an error, print it.
+                    console.log(error);
+                },
+            });
+            // Render normal user page
+        } else {
+            console.log('Admin')
+            // Render anything for admin...
+        }
     } else {
-        console.log('Admin')
-        // Render anything for admin...
+        window.location.replace('http://localhost:5500/login')
     }
 };
 
