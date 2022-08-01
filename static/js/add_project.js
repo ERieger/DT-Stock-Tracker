@@ -79,6 +79,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="width"
                                     placeholder="width"
@@ -93,6 +94,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="height"
                                     placeholder="height"
@@ -107,6 +109,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="length"
                                     placeholder="length"
@@ -121,6 +124,9 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
+                                    min="1"
+                                    max="20"
                                     class="form-control"
                                     id="qty"
                                     placeholder="quantity"
@@ -193,6 +199,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="width"
                                     placeholder="width"
@@ -206,6 +213,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="height"
                                     placeholder="height"
@@ -219,6 +227,7 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
                                     class="form-control"
                                     id="length"
                                     placeholder="length"
@@ -232,6 +241,9 @@ $.fn.newMaterial = function (piece) { // Accepts object piece as argument
                             <div class="form-floating mb-3">
                                 <input
                                     type="number"
+                                    step="1"
+                                    min="1"
+                                    max="20"
                                     class="form-control"
                                     id="qty"
                                     placeholder="quantity"

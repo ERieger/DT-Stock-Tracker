@@ -199,7 +199,7 @@ def make_class_entry(class_name):
   for piece in class_pieces:
     material = MATERIALS.find_one({"id": piece})
     material_entry = parser.calculate_material_costs(material, class_pieces[piece])
-    total_price = total_price + material_entry['price']
+    total_price = round(total_price + material_entry['price'], 2)
     class_entry['materials'][piece] = material_entry
   
   class_entry['price'] = total_price
@@ -215,7 +215,7 @@ def make_order_report(class_list):
   for classes in class_list:
     class_report = make_class_entry(classes)
 
-    price = price + class_report['price']
+    price = round(price + class_report['price'], 2)
 
     report[classes] = class_report
   

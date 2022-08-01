@@ -33,8 +33,8 @@ class OrderParser:
 
         # Add a piece to the list for however many pieces are required
         for p in pieces:
-            for _ in range(p['qty']):
-                piece_list.append((int(p['w']), int(p['l'])))
+            for _ in range(abs(p['qty'])):
+                piece_list.append((abs(int(p['w'])), abs(int(p['l']))))
 
         return sorted(piece_list)   # Return the pices list, sorted by size
 
@@ -50,10 +50,10 @@ class OrderParser:
             sheets = 0
 
             for p in pieces:
-                area = area + (p['w']*p['l']*p['qty'])
+                area = area + abs((p['w']*p['l']*p['qty'])/1000000)
 
             # The dimensions of the sheet a material is ordered in
-            sheet_dim = (material['dim']['w'], material['dim']['l'])
+            sheet_dim = (abs(material['dim']['w']), abs(material['dim']['l']))
 
             # calculate the number of sheets required for this material order
             sheets = self.calculate_sheets(sheet_dim, self.expand(pieces))
@@ -67,9 +67,9 @@ class OrderParser:
             length = 0
 
             for p in pieces:
-                length = length + (p['l']*p['qty'])
+                length = length + abs((p['l']*p['qty'])/1000)
 
-            price = round((length/1000) * material_price, 2) # (length is in millimetres, price is per metre)
+            price = round((length) * material_price, 2) # (length is in millimetres, price is per metre)
 
             material_entry['l'] = length
 
