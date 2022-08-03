@@ -151,5 +151,19 @@ $.fn.render_summary = function () {
 
 /* When the page is loaded, generate the report */
 $(document).ready(function () {
-  $('.report-container').render_summary();
+  window.onload = () => {
+    if (localStorage.getItem('IDToken') != undefined || localStorage.getItem('IDToken') != null) {
+        if (localStorage.getItem('admin') == 'false') {
+            console.log('Not an admin');
+            window.location.replace('http://localhost:5500/')
+            // Render normal user page
+        } else {
+          $('.report-container').render_summary();
+            console.log('Admin')
+            // Render anything for admin...
+        }
+    } else {
+        window.location.replace('http://localhost:5500/login')
+    }
+};
 });
