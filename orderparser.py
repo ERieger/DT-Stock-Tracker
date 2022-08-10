@@ -48,17 +48,18 @@ class OrderParser:
         if (material['type'] == 1): # The material is in sheet form
             area = 0
             sheets = 0
-
+            
+            # Area is cumulative
             for p in pieces:
-                area = area + abs((p['w']*p['l']*p['qty'])/1000000)
+                area = area + abs((p['w']*p['l']*p['qty'])/1000000) # absolute value (no negative area) and conversion to metres
 
             # The dimensions of the sheet a material is ordered in
-            sheet_dim = (abs(material['dim']['w']), abs(material['dim']['l']))
+            sheet_dim = (abs(material['dim']['w']), abs(material['dim']['l'])) # set dimensions of the sheet depending on the material code
 
             # calculate the number of sheets required for this material order
             sheets = self.calculate_sheets(sheet_dim, self.expand(pieces))
 
-            price = round(sheets * material_price, 2)
+            price = round(sheets * material_price, 2) # Rounding to the nearest cent
 
             material_entry['sheets'] = sheets
             material_entry['area'] = area
@@ -83,24 +84,28 @@ class OrderParser:
     def extract_class_pieces(self, projects):
         pieces = []
 
+        # For every piece in every project
         for project in projects:
             for piece in project['pieces']:
-                pieces.append(piece)
+                pieces.append(piece) # Add each piece to the 'pieces' array
         
-        collated_list = {}
+        collated_list = {} # The list of project sorted by class
 
+        # for each piece in the 'pieces' array
         for piece in pieces:
+            # Add a piece object into the collated list
             collated_list[piece['material']] = []
             newpiece = {}
             newpiece['qty'] = piece['qty']
             newpiece['l'] = piece['l']
-
+        
+            # Only sheets have the width attribute
             if (piece['type'] == 1): # Unique to sheets
                 newpiece['w'] = piece['w']
             
             collated_list[piece['material']].append(newpiece)
 
-        return collated_list
+        return collated_list # Return the sorted list
 
     # Creating an excel document of the report report
     def create_excel_report(self, order):

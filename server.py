@@ -1,3 +1,4 @@
+# Importing the required libraries
 from fcntl import F_SEAL_SEAL
 from urllib import response
 from bson import ObjectId
@@ -11,8 +12,10 @@ from google.auth import jwt
 
 from bson.json_util import loads, dumps
 
+# Connect to the server
 client = MongoClient(mongo_uri.uri)
 
+# Connecting to the database
 db = client['dt-stock-tracker']
 
 #The different database collections
@@ -20,6 +23,7 @@ MATERIALS = db.materials
 USERS = db.users
 PROJECTS = db.projects
 
+# The flask server
 app = Flask(__name__)
 
 # The main dashboard page
@@ -146,7 +150,7 @@ def material_info():
   # TBC
   return 'hello, world'
 
-#A list of the available materials in the database
+# A list of the available materials in the database
 @app.route('/material/list')
 def material_list():
   materialArr = []
@@ -186,25 +190,26 @@ def new_account(credential):
 def make_class_entry(class_name):
   parser = OrderParser()
 
+  # Find the projects matching the class
   projects = PROJECTS.find({"$and": [{"class": class_name}, {"complete": False}]})
 
-  class_pieces = parser.extract_class_pieces(projects)
+  class_pieces = parser.extract_class_pieces(projects) # Extracting a list of pieces from the projects
 
+  # Initialise variables
   total_price = 0
-
   class_entry = {}
-
   class_entry['materials'] = {}
 
+  # For each of the pieces in the piece array
   for piece in class_pieces:
-    material = MATERIALS.find_one({"id": piece})
-    material_entry = parser.calculate_material_costs(material, class_pieces[piece])
-    total_price = round(total_price + material_entry['price'], 2)
-    class_entry['materials'][piece] = material_entry
+    material = MATERIALS.find_one({"id": piece}) # Get the material information from the database
+    material_entry = parser.calculate_material_costs(material, class_pieces[piece]) # Calculate the price of the material from it's properties
+    total_price = round(total_price + material_entry['price'], 2) # Rounding the price to the nearest cent (just making sure)
+    class_entry['materials'][piece] = material_entry # Add the material's price report to the class report
   
-  class_entry['price'] = total_price
+  class_entry['price'] = total_price # Add the total price to the report
 
-  return class_entry
+  return class_entry # return the class entry
 
 #make the overall order report
 def make_order_report(class_list):
@@ -212,16 +217,17 @@ def make_order_report(class_list):
 
   price = 0
 
+  # For each of classes in the class list
   for classes in class_list:
-    class_report = make_class_entry(classes)
+    class_report = make_class_entry(classes) # Make a report for the class
 
-    price = round(price + class_report['price'], 2)
+    price = round(price + class_report['price'], 2) # Cumulative price for all clases (rounded to nearest cent)
 
     report[classes] = class_report
   
   report['price'] = price
 
-  return report
+  return report # Return the report object
 
 # Launching the flask server
 if __name__ == "__main__":
