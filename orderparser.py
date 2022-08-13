@@ -82,28 +82,22 @@ class OrderParser:
     
     # Extracting pieces from a classes' projects
     def extract_class_pieces(self, projects):
-        pieces = []
+        collated_list = {} # The list of project sorted by class
 
         # For every piece in every project
         for project in projects:
             for piece in project['pieces']:
-                pieces.append(piece) # Add each piece to the 'pieces' array
-        
-        collated_list = {} # The list of project sorted by class
-
-        # for each piece in the 'pieces' array
-        for piece in pieces:
-            # Add a piece object into the collated list
-            collated_list[piece['material']] = []
-            newpiece = {}
-            newpiece['qty'] = piece['qty']
-            newpiece['l'] = piece['l']
-        
-            # Only sheets have the width attribute
-            if (piece['type'] == 1): # Unique to sheets
-                newpiece['w'] = piece['w']
+                # Add a piece object into the collated list
+                collated_list[piece['material']] = []
+                newpiece = {}
+                newpiece['qty'] = piece['qty']
+                newpiece['l'] = piece['l']
             
-            collated_list[piece['material']].append(newpiece)
+                # Only sheets have the width attribute
+                if (piece['type'] == 1): # Unique to sheets
+                    newpiece['w'] = piece['w']
+                
+                collated_list[piece['material']].append(newpiece)
 
         return collated_list # Return the sorted list
 
