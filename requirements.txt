@@ -1,5 +1,0 @@
-numpy
-flask
-google-auth
-pymongo
-XlsxWriter

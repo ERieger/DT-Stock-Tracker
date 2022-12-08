@@ -1,0 +1,37 @@
+{
+  "name": "dt-stock-tracker",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">DT-Stock-Tracker</h1> <p align=\"center\">DT-Stock-Tracker is an open source and fully self hosted system for automating the process of material ordering. It has been custom built using robust technologies.</p>",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ERieger/DT-Stock-Tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ERieger/DT-Stock-Tracker/issues"
+  },
+  "homepage": "https://github.com/ERieger/DT-Stock-Tracker#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "connect-ensure-login": "^0.1.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.8.0",
+    "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "passport-google-oidc": "^0.1.0",
+    "pug": "^3.0.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
