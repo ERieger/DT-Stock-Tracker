@@ -7,6 +7,7 @@ const passport = require('passport');
 const connectEnsureLogin = require('connect-ensure-login');     // Handle page access to authenticated users
 const MongoStore = require('connect-mongo');                    // Store session data in mongo
 const { v4: uuidv4 } = require('uuid');                         // Module to generate uuids
+const path = require('path');                                   // Interact with file paths
 
 const config = require("./config/main.config.json")
 
@@ -20,6 +21,7 @@ app.set('view engine', 'pug');              // Set view engine
 app.get('/status', (req, res) => { res.status(200).end(); });
 
 const authRouter = require('./routes/auth.route');
+const indexRouter = require('./routes/index.route')
 
 // Connect to database - load values form environment variables
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`, {
@@ -28,7 +30,8 @@ mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWO
     useUnifiedTopology: true
 });
 
-const User = require('./models/user.model');
+const Users = require('./models/user.model');
+const Projects = require('./models/project.model');
 
 // Initialise session
 app.use(session({
@@ -62,29 +65,9 @@ passport.deserializeUser(function (user, cb) {
 });
 
 // Routing
-app.get('/', (req, res) => {            // Homepage
-    res.render('index');
-});
+app.use('/static', express.static(path.join(__dirname, '../public/static')));
 
-app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-    res.render('dashboard')
-})
-
-// Logout users
-app.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) { return next(err); }
-        res.redirect('/login');
-    });
-});
-
-app.get('/authtest', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-    res.send(`Hello ${req.user.name}. Your session ID is ${req.sessionID} 
-     and your session expires in ${req.session.cookie.maxAge} 
-     milliseconds.<br><br>
-     <a href="/logout">Log Out</a><br><br>`);
-});
-
+app.use('/', indexRouter)
 app.use('/', authRouter)
 
 // Start server listening on selected port
