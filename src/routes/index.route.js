@@ -4,7 +4,7 @@ const connectEnsureLogin = require('connect-ensure-login');     // Handle page a
 
 const Users = require('../models/user.model');
 const Projects = require('../models/project.model');
-
+const Classes = require('../models/class.model');
 
 router.get('/', (req, res) => {            // Homepage
     res.render('index');
@@ -41,13 +41,28 @@ router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) =
     if (pageData.projects.length == 0) {
         pageData.projects = "No Projects.";
     }
-    
+
     if (pageData.completed.length == 0) {
         pageData.completed = "No Projects.";
     }
 
-    console.log('User: ', user, 'Data: ', pageData);
-    res.render('dashboard', pageData)
-})
+    res.render('student-dashboard', pageData)
+});
+
+router.get('/form', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    let pageData = {
+        classes: []
+    }
+    let classGroups = await Classes.find({}, 'name teacher');
+
+    for (let i = 0; i < classGroups.length; i++) {
+        pageData.classes.push({
+            name: `${classGroups[i].name} - ${classGroups[i].teacher}`,
+            id: classGroups[i]._id.toString()
+        });
+    }
+
+    res.render('form', pageData);
+});
 
 module.exports = router;

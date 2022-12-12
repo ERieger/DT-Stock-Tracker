@@ -20,8 +20,14 @@ app.set('views', __dirname + '/views');     // Views directory
 app.set('view engine', 'pug');              // Set view engine
 app.get('/status', (req, res) => { res.status(200).end(); });
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.text());
+
 const authRouter = require('./routes/auth.route');
-const indexRouter = require('./routes/index.route')
+const indexRouter = require('./routes/index.route');
+const materialsApi = require('./api/material.api');
+const projectsApi = require('./api/projects.api');
 
 // Connect to database - load values form environment variables
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`, {
@@ -32,6 +38,8 @@ mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWO
 
 const Users = require('./models/user.model');
 const Projects = require('./models/project.model');
+const Classes = require('./models/class.model');
+const Materials = require('./models/material.model');
 
 // Initialise session
 app.use(session({
@@ -67,8 +75,10 @@ passport.deserializeUser(function (user, cb) {
 // Routing
 app.use('/static', express.static(path.join(__dirname, '../public/static')));
 
-app.use('/', indexRouter)
-app.use('/', authRouter)
+app.use('/', indexRouter);
+app.use('/', authRouter);
+app.use('/api/materials', materialsApi);
+app.use('/api/projects', projectsApi);
 
 // Start server listening on selected port
 app.listen(config.network.port, () => {
