@@ -1,0 +1,94 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='A minimalist layout for Login pages. Built with Pico CSS.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // JQuery
+  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
+  // Custom styles for this page
+  link(rel='stylesheet' href='static/css/manage.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+        small.secondary  - Manage Project
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Home
+          li
+            a(href='./project.html') New Project
+          li
+            a(href='./summary.html') Order Summaries
+          li
+            a(href='./database.html') Manage Database
+// ./ Nav
+// Main
+main.container
+  article.grid
+    #leftinput
+      hgroup
+        h2 New Project
+        h3 Please fill in the information to create a new project
+      form
+        label(for='title') Title
+        input(type='text' name='title' placeholder='Title' required='')
+        label(for='desc') Description
+        textarea(name='desc' placeholder='Please write a description of your project.' required='')
+        .grid
+          button Save
+          button Order
+    #rightinput
+      hgroup
+        h2#componentTitle Components (1)
+      .componentlist
+        ul.pieces
+          li
+            .grid
+              select#material(required='')
+                option(value='' selected='' hidden='' disabled='') Material
+                option(value='materialcode') Material Name
+              input#length(type='number' placeholder='Length' required='')
+              input#width(type='number' placeholder='Width' disabled='')
+              input#quantity(type='number' placeholder='Qty' min='0' max='16' required='')
+              a.remove(title='remove piece' onclick='$(this).deletePiece()')
+                box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
+              a.add(title='add new piece' onclick="$('.pieces').newPiece()")
+                box-icon(name='plus' color='var(--contrast-hover)')
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
+  
+  small.right
+    | Signed in &bull; 
+    a.secondary(href='/logout') Logout
+// ./ Footer
+// Minimal theme switcher
+script(src='static/js/theme-switcher.client.js')
+script(src='script.js')

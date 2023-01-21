@@ -10,6 +10,19 @@ router.get('/', (req, res) => {            // Homepage
     res.render('index');
 });
 
+/* For testing */
+router.get('/manage', (req, res) => {
+    res.render('manage');
+});
+
+router.get('/project', (req, res) => {
+    res.render('project');
+});
+
+router.get('/summary', (req, res) => {
+    res.render('summary');
+});
+
 router.get('/authtest', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     res.send(`Hello ${req.user.name}. Your session ID is ${req.sessionID} 
      and your session expires in ${req.session.cookie.maxAge} 

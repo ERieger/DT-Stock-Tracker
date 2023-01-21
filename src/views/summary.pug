@@ -1,0 +1,120 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='A minimalist layout for Login pages. Built with Pico CSS.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  link(rel='canonical' href='https://picocss.com/examples/sign-in/')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // JQuery
+  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
+  // Custom styles for this page
+  link(rel='stylesheet' href='static/css/manage.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+        small.secondary  - Order Summary
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Home
+          li
+            a(href='./project.html') New Project
+          li
+            a(href='./summary.html') Order Summaries
+          li
+            a(href='./database.html') Manage Database
+// ./ Nav
+// Main
+main.container
+  article.grid
+    .contentContainer
+      h2.heading 
+        | Order Summary
+        small.right $132.40
+      .summaryContainer
+        details
+          summary 
+            | Class 1 - 
+            small.secondary $23.12
+          p Here is some information about the first class.
+        details
+          summary 
+            | Class 2 - 
+            small.secondary $51.92
+          p Here is the information about class 2
+        details
+          summary
+            | Class 3 - 
+            small.secondary $32.40
+          p Here is the information about class 3
+        details
+          summary
+            | Class 4 - 
+            small.secondary $24.96
+          table(role="grid")
+            thead 
+              tr
+                th(scope="col") #
+                th(scope="col") Code
+                th(scope="col") Qty
+                th(scope="col") Unit Price
+                th(scope="col") Net Price 
+            tbody 
+              tr 
+                th(scope="row") 1
+                th PTZ1023 
+                th 3 Sheets 
+                th $04.22
+                th $12.66
+              tr 
+                th(scope="row") 2
+                th SLD2101
+                th 1.25m
+                th $04.80
+                th $06.00
+              tr 
+                th(scope="row") 3
+                th ALS5020
+                th 3.00m
+                th $02.10
+                th $06.30
+      a.download(title='Download as spreadsheet')
+        box-icon(name='spreadsheet' size='sm' color='var(--contrast-hover)')
+      a.order(title='Mark as ordered')
+        box-icon(name='check' size='sm' color='var(--form-element-valid-active-border-color)')
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
+  
+  small.right
+    | Signed in &bull; 
+    a.secondary(href='/logout') Logout
+// ./ Footer
+// Minimal theme switcher
+script(src='static/js/theme-switcher.client.js')
