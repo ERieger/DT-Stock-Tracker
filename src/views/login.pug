@@ -1,7 +1,68 @@
 doctype html
-html
-    head
-        title Login
-    body
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='A minimalist layout for Login pages. Built with Pico CSS.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  link(rel='canonical' href='https://picocss.com/examples/sign-in/')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Custom styles for this example
+  link(rel='stylesheet' href='/static/css/custom.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li(style='visibility: hidden')
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Home
+          li
+            a(href='/new') New Project
+          li
+            a(href='/summary') Order Summary
+          li 
+            a(href='/manage') Manage Materials
+// ./ Nav
+// Main
+main.container
+  article.grid
+    div
+      hgroup
         h1 Sign in
-        a.button.google(href='/login/federated/google') Sign in with Google
+        h2 Please sign in to access your projects
+      div
+        button.contrast.google(onclick="location.href='/login/federated/google'") Sign in with Google
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
+
+  small.right
+    | Not Signed in &bull; 
+    a.secondary(href='/logout') Logout
+
+
+// ./ Footer
+// Minimal theme switcher
+script(src='/static/js/theme-switcher.client.js')

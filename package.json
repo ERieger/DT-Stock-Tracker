@@ -1,6 +1,6 @@
 {
   "name": "dt-stock-tracker",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "<h1 align=\"center\">DT-Stock-Tracker</h1> <p align=\"center\">DT-Stock-Tracker is an open source and fully self hosted system for automating the process of material ordering. It has been custom built using robust technologies.</p>",
   "main": "app.js",
   "scripts": {
