@@ -3,7 +3,7 @@ function add_project() {
         name: $('#projectName').val(), // Get name
         class: $('#projectClass').val(), // Get class
         desc: $('#projectDesc').val(), // Get description
-        thumb: 'https://i.quotev.com/img/q/u/18/10/21/g7fp3vu7ce.jpg', // Set image URL
+        thumb: 'https://cdn.shopify.com/s/files/1/2135/0257/products/deakin-bookcase-natural-bookcase-kd-core-625861.jpg?v=1569371502', // Set image URL
         pieces: [], // Define pieces
         complete: false // Not complete
     }
