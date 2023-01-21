@@ -51,9 +51,9 @@ html(lang='en')
                                 .container
                                     .row
                                         -
-                                        if projects == "No Projects."
+                                        if projects.length >= "No Projects."
                                             p No Projects.
-                                        else 
+                                        else
                                             each project in completed
                                                 +project-card(project.name, project.desc, project.id, project.thumb)
     footer.text-muted.py-5

@@ -53,7 +53,7 @@ app.use(session({
         dbName: process.env.MONGO_DATABASE
     }),
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: 60 * 60 * 1000, secure: false },    // 1 hour, allow http
 }));
 

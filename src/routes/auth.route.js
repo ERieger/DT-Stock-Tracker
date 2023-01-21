@@ -12,14 +12,14 @@ passport.use(new GoogleStrategy({
     callbackURL: '/oauth2/redirect/google',
     scope: ['profile']
 }, function verify(issuer, profile, cb) {
-    FederatedCredentails.findOne({ provider: issuer, subject: profile.id }, function (err, doc) {
+    FederatedCredentails.findOne({ provider: issuer, subject: profile.id }, async function (err, doc) {
         if (err) { return cb(err); }
         if (!doc) {
-            User.create({ name: profile.displayName }, function (err) {
+            await User.create({ name: profile.displayName }, async function (err) {
                 if (err) { return cb(err); }
 
                 var id = this.lastID;
-                FederatedCredentails.create({ userId: id, provider: issuer, subject: profile.id }, function (err) {
+                await FederatedCredentails.create({ userId: id, provider: issuer, subject: profile.id }, function (err) {
                     if (err) { return cb(err); }
                     var user = {
                         id: id,

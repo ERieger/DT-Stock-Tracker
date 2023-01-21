@@ -46,6 +46,8 @@ router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) =
         pageData.completed = "No Projects.";
     }
 
+    console.log(pageData)
+
     res.render('student-dashboard', pageData)
 });
 
