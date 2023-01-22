@@ -59,9 +59,9 @@ main#materialContainer.container
       input#length(type='number' placeholder='Length' required=true)
       input#width(type='number' placeholder='Width' required=true)
       input#thickness(type='number' placeholder='Thickness' required=true)
-    a.reset(title='reset inputs')
+    a.round.reset(title='reset inputs')
       box-icon(name='reset' color='var(--contrast-hover)')
-    a.create(title='add new material')
+    a.round.create(title='add new material')
       box-icon(name='check' color='var(--form-element-valid-active-border-color)')
   .databaselist
     ul
@@ -73,9 +73,9 @@ main#materialContainer.container
           input(disabled='')
           input(disabled='')
           input(disabled='')
-        a.remove(title='remove material')
+        a.round.remove(title='remove material')
           box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
-        a.edit(title='edit material')
+        a.round.edit(title='edit material')
           box-icon(name='pencil'  color='var(--contrast-hover)')
       li
         .grid

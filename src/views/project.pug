@@ -72,9 +72,9 @@ main.container
               input#length(type='number' placeholder='Length' required='')
               input#width(type='number' placeholder='Width' disabled='')
               input#quantity(type='number' placeholder='Qty' min='0' max='16' required='')
-              a.remove(title='remove piece' onclick='$(this).deletePiece()')
+              a.round.remove(title='remove piece' onclick='$(this).deletePiece()')
                 box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
-              a.add(title='add new piece' onclick="$('.pieces').newPiece()")
+              a.round.add(title='add new piece' onclick="$('.pieces').newPiece()")
                 box-icon(name='plus' color='var(--contrast-hover)')
 // ./ Main
 // Footer
