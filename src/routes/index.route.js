@@ -7,7 +7,7 @@ const Projects = require('../models/project.model');
 const Classes = require('../models/class.model');
 
 router.get('/', (req, res) => {            // Homepage
-    res.render('index');
+    res.render('dashboard');
 });
 
 /* For testing */

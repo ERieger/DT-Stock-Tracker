@@ -61,18 +61,9 @@ article div {
 }
 
 /* Nav */
-summary[role="link"].secondary:is([aria-current],:hover,:active,:focus) {
+summary[role="link"].secondary:is([aria-current], :hover, :active, :focus) {
   background-color: transparent;
   color: var(--secondary-hover);
-}
-
-/* Hero Image */
-article div:nth-of-type(2) {
-  display: none;
-  background-color: #374956;
-  background-image: url("assets/alessio-soggetti-8jeWeKdygfk-unsplash-1000x1200.jpg");
-  background-position: center;
-  background-size: cover;
 }
 
 @media (min-width: 992px) {

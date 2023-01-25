@@ -66,6 +66,10 @@ button {
   padding: 0;
 }
 
+.componentlist ul li .add, .add::after {
+  visibility: hidden;
+}
+
 .componentlist ul li:last-child .add {
   visibility: visible;
 }
@@ -74,14 +78,15 @@ button {
   visibility: hidden;
 }
 
-input, select {
+input,
+select {
   font-size: var(--input-font-size);
   margin-bottom: 0 !important;
 }
 
 textarea {
   font-size: var(--input-font-size);
-  height: calc(6 * var(--input-font-size) + 2 * 10px)
+  height: calc(6 * var(--input-font-size) + 2 * 10px);
 }
 
 #materialContainer {
@@ -98,7 +103,6 @@ textarea {
   height: calc((2 * var(--spacing) + 52px + 7.5px) * 5);
   overflow: visible;
 }
-
 
 .databaselist ul {
   height: 100%;
@@ -172,7 +176,7 @@ textarea {
   opacity: 1;
 }
 
-.download {
+.download, .previous-project {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -180,7 +184,7 @@ textarea {
   bottom: -20px;
 }
 
-.order {
+.order, .next-project {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -188,7 +192,8 @@ textarea {
   bottom: -20px;
 }
 
-.reset, .remove {
+.reset,
+.remove {
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -197,7 +202,9 @@ textarea {
   z-index: 1;
 }
 
-.create, .edit, .add {
+.create,
+.edit,
+.add {
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -206,8 +213,40 @@ textarea {
   z-index: 1;
 }
 
+.edit-project {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  right: -20px;
+  top: -20px;
+  z-index: 1;
+}
+
 .summaryContainer details:last-child {
   margin-bottom: 0;
+}
+
+/* Dashboard */
+.projectNav {
+  height: 70px;
+  padding: 0 var(--spacing);
+}
+
+.projectNav ul li {
+  cursor: pointer;
+}
+
+.projectInfo {
+  height: 490px;
+  position: relative;
+}
+
+.projectPhoto {
+  background-color: var(--secondary-focus);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Common */
@@ -252,11 +291,11 @@ textarea {
 }
 
 /* Nav */
-summary[role="link"].secondary:is([aria-current],:hover,:active,:focus) {
+summary[role="link"].secondary:is([aria-current], :hover, :active, :focus) {
   background-color: transparent;
   color: var(--secondary-hover);
 }
-  
+
 @media (min-width: 992px) {
   .grid > div:nth-of-type(2) {
     display: block;

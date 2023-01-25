@@ -8,15 +8,19 @@ head
   link(rel='canonical' href='https://picocss.com/examples/sign-in/')
   // Pico.css
   link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // JQuery
+  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
   // Custom styles for this example
-  link(rel='stylesheet' href='/static/css/login.css')
+  link(rel='stylesheet' href='static/css/custom.css')
 // Nav
 nav.container-fluid
   ul
     li
       a.contrast(href='./' onclick='event.preventDefault()')
         strong Concordia Design and Technologies
-        small.secondary  - Login
+        small.secondary  - Dashboard
   ul
     li
       details(role='list' dir='rtl')
@@ -28,28 +32,44 @@ nav.container-fluid
             a(href='#' data-theme-switcher='light') Light
           li
             a(href='#' data-theme-switcher='dark') Dark
-    li(style='visibility: hidden')
+    li
       details(role='list' dir='rtl')
         summary.secondary(aria-haspopup='listbox' role='link') Pages
         ul(role='listbox')
           li
-            a(href='/') Home
+            a(href='/') Dashboard
           li
-            a(href='/project') New Project
+            a(href='./project') New Project
           li
-            a(href='/summary') Order Summary
-          li 
-            a(href='/manage') Manage Materials
+            a(href='./summary') Order Summary
+          li
+            a(href='./manage') Manage Database
 // ./ Nav
 // Main
 main.container
-  article.grid
+  nav.projectNav
+    ul
+      li
+        a.contrast(active='') Current Projects
+      li
+        a.contrast Pending Orders
+      li
+        a.contrast Completed Orders
+  article.grid.projectInfo
     div
       hgroup
-        h1 Sign in
-        h2 Please sign in to access your projects
-      div
-        button.contrast.google(onclick="location.href='/login/federated/google'") Sign in with Google
+        h1 Placeholder Project
+        h2 Currently awaiting ordering
+    .projectPhoto
+      p
+        box-icon(name='error' size='lg' color='var(--color)')
+      p This project has no display photo!
+    a.round.edit-project(title='Edit Project')
+      box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
+    a.round.previous-project(title='Previous Project')
+      box-icon(name='chevron-left' size='sm' color='var(--contrast-hover)')
+    a.round.next-project(title='Next Project')
+      box-icon(name='chevron-right' size='sm' color='var(--contrast-hover)')
 // ./ Main
 // Footer
 footer.container-fluid
@@ -57,13 +77,11 @@ footer.container-fluid
     | Built with 
     a.secondary(href='https://picocss.com') Pico
     |  &bull; 
-    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
-
+    a.secondary(href='https://github.com/picocss/examples/tree/master/sign-in/') Source code
+  
   small.right
-    | Not Signed in &bull; 
+    | Signed in &bull; 
     a.secondary(href='/logout') Logout
-
-
 // ./ Footer
 // Minimal theme switcher
-script(src='/static/js/theme-switcher.client.js')
+script(src='static/js/theme-switcher.client.js')
