@@ -1,3 +1,20 @@
+mixin project(project) 
+  div.grid.details(id=`${project._id}`)
+    div
+      hgroup 
+        h1= project.name 
+        if (project.status == 'incomplete')
+          h2 To be ordered 
+        else if (project.status == 'pending')
+          h2 Pending order 
+        else if (project.status == 'ordered')
+          h2 Project ordered
+      p= project.desc
+    div.projectPhoto
+      p
+        box-icon(name='error' size='lg' color='var(--color)')
+      p This project has no display photo!
+
 doctype html
 head
   meta(charset='utf-8')
@@ -55,21 +72,26 @@ main.container
         a.contrast Pending Orders
       li
         a.contrast Completed Orders
-  article.grid.projectInfo
-    div
-      hgroup
-        h1 Placeholder Project
-        h2 Currently awaiting ordering
-    .projectPhoto
-      p
-        box-icon(name='error' size='lg' color='var(--color)')
-      p This project has no display photo!
+  article.projectInfo(activeCategory='incomplete')
+    if (newUser == false)
+      each project in projects
+        if (project.status == 'incomplete')
+          .incomplete 
+            +project(project)
+        else if (project.status == 'pending')
+          .pending(style='display: none') 
+            +project(project)
+        else if (project.status == 'ordered')
+          .complete(style='display: none')
+            +project(project)
+
     a.round.edit-project(title='Edit Project')
       box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
-    a.round.previous-project(title='Previous Project')
+    a.round.previous-project(title='Previous Project' onclick='previous()')
       box-icon(name='chevron-left' size='sm' color='var(--contrast-hover)')
-    a.round.next-project(title='Next Project')
+    a.round.next-project(title='Next Project' onclick='next()')
       box-icon(name='chevron-right' size='sm' color='var(--contrast-hover)')
+
 // ./ Main
 // Footer
 footer.container-fluid
@@ -80,7 +102,8 @@ footer.container-fluid
     a.secondary(href='https://github.com/picocss/examples/tree/master/sign-in/') Source code
   
   small.right
-    | Signed in &bull; 
+    = `Signed in as ${user} `
+    | &bull; 
     a.secondary(href='/logout') Logout
 // ./ Footer
 // Minimal theme switcher

@@ -18,9 +18,9 @@ const Project = new Schema({
     desc: String,   //A description of the project
     class: String,  //The class this project belongs to
     thumb: String,  //URL for the thumbnail image
+    pieces: Array,  //Collection of pieces used by the project
     qty: Number,    //default 1, only for templated orders (which can only be created by admins)
-    pieces: Object,  //Collection of pieces used by the project
-    status: String, //incomplete, pending, ordered
+    status: { String, enum: ['incomplete', 'pending', 'ordered'] }, //The project's current order status
 });
 
 module.exports = mongoose.model('Project', Project);

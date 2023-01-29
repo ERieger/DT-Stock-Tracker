@@ -237,16 +237,24 @@ textarea {
 }
 
 .projectInfo {
+  margin: 0;
   height: 490px;
   position: relative;
 }
 
-.projectPhoto {
+.details, .incomplete, .pending, .complete {
+  height: 100%;
+  padding: 0;
+}
+
+div .projectPhoto {
   background-color: var(--secondary-focus);
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
   display: flex !important;
   align-items: center;
   justify-content: center;
+  background-position: center;
+  background-size: cover;
 }
 
 /* Common */

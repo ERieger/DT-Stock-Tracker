@@ -8,9 +8,18 @@ const Classes = require('../models/class.model');
 const { default: mongoose } = require('mongoose');
 
 router.get('/', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {            // Homepage
-    console.log(req.user);
+    let userProjects = await Projects.find({owner: req.user.id}); // Fetch the user's projects
+    
+    let newAccount = userProjects.len==0 ? true : false;    // Is the account new (do they have any projects)
 
-    res.render('dashboard');
+    // Send data to rendering engine (this page is server-side rendered)
+    res.render('dashboard', 
+        {
+            projects: userProjects,
+            newUser: newAccount,
+            user: req.user.name
+        }
+    );
 });
 
 /* For testing */
