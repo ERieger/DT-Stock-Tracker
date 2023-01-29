@@ -20,7 +20,7 @@ const Project = new Schema({
     thumb: String,  //URL for the thumbnail image
     pieces: Array,  //Collection of pieces used by the project
     qty: Number,    //default 1, only for templated orders (which can only be created by admins)
-    status: { String, enum: ['incomplete', 'pending', 'ordered'] }, //The project's current order status
+    status: String, //The project's current order status
 });
 
 module.exports = mongoose.model('Project', Project);

@@ -33,7 +33,7 @@ function show(category) {
 //Move to the next project in the category
 function next() {
     let category = document.querySelector('.projectInfo').getAttribute('activeCategory');
-    let container = document.querySelectory(`.${category}`);
+    let container = document.querySelector(`.${category}`);
 
     for (var i=0; i<container.childElementCount-1; i++) {
         let child = container.children[i];
@@ -52,7 +52,7 @@ function next() {
 //Move to the previous project in the category
 function previous() {
     let category = document.querySelector('.projectInfo').getAttribute('activeCategory');
-    let container = document.querySelectory(`.${category}`);
+    let container = document.querySelector(`.${category}`);
 
     for (var i=container.childElementCount-1; i>0; i++) {
         let child = container.children[i];

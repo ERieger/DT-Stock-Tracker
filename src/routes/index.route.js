@@ -7,6 +7,7 @@ const Projects = require('../models/project.model');
 const Classes = require('../models/class.model');
 const { default: mongoose } = require('mongoose');
 
+// The dashboard (home) page
 router.get('/', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {            // Homepage
     let userProjects = await Projects.find({owner: req.user.id}); // Fetch the user's projects
     
@@ -17,18 +18,23 @@ router.get('/', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {      
         {
             projects: userProjects,
             newUser: newAccount,
-            user: req.user.name
+            user: req.user
         }
     );
 });
 
-/* For testing */
-router.get('/manage', (req, res) => {
-    res.render('manage');
+// The project entry/editing page
+router.get('/project', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    res.render('project',
+        {
+            user: req.user,
+            classes: await Classes.find({})
+        }
+    );
 });
 
-router.get('/project', (req, res) => {
-    res.render('project');
+router.get('/manage', (req, res) => {
+    res.render('manage');
 });
 
 router.get('/summary', (req, res) => {

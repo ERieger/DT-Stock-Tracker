@@ -51,31 +51,25 @@ main.container
       hgroup
         h2 New Project
         h3 Please fill in the information to create a new project
-      form
+      form(onsubmit='event.preventDefault()')
         label(for='title') Title
-        input(type='text' name='title' placeholder='Title' required='')
+        div.grid
+          input#title(type='text' name='title' placeholder='Title' required='')
+          select#class(name='class' required='')
+            option(value='' selected='' hidden='' disabled='') Select a class
+            each dtclass in classes 
+              option(value=`${dtclass.name}`)= dtclass.name
         label(for='desc') Description
-        textarea(name='desc' placeholder='Please write a description of your project.' required='')
+        textarea#desc(name='desc' placeholder='Please write a description of your project.' required='')
         .grid
-          button Save
-          button Order
+          input(type='button' onclick='$().save();' value="Save")
+          input(type='button' conlick='order();' value="Order")
     #rightinput
       hgroup
         h2#componentTitle Components (1)
       .componentlist
         ul.pieces
-          li
-            .grid
-              select#material(required='')
-                option(value='' selected='' hidden='' disabled='') Material
-                option(value='materialcode') Material Name
-              input#length(type='number' placeholder='Length' required='')
-              input#width(type='number' placeholder='Width' disabled='')
-              input#quantity(type='number' placeholder='Qty' min='0' max='16' required='')
-              a.round.remove(title='remove piece' onclick='$(this).deletePiece()')
-                box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
-              a.round.add(title='add new piece' onclick="$('.pieces').newPiece()")
-                box-icon(name='plus' color='var(--contrast-hover)')
+          
 // ./ Main
 // Footer
 footer.container-fluid
@@ -86,9 +80,10 @@ footer.container-fluid
     a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
   
   small.right
-    | Signed in &bull; 
+    = `Signed in as ${user.name} `
+    | &bull; 
     a.secondary(href='/logout') Logout
 // ./ Footer
 // Minimal theme switcher
 script(src='static/js/theme-switcher.client.js')
-script(src='static/js/manage-project.client.js')
+script(src='static/js/project.client.js')

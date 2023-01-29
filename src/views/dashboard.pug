@@ -1,35 +1,49 @@
-mixin project(project) 
-  div.grid.details(id=`${project._id}`)
-    div
-      hgroup 
-        h1= project.name 
-        if (project.status == 'incomplete')
-          h2 To be ordered 
-        else if (project.status == 'pending')
-          h2 Pending order 
-        else if (project.status == 'ordered')
-          h2 Project ordered
-      p= project.desc
-    div.projectPhoto
-      p
-        box-icon(name='error' size='lg' color='var(--color)')
-      p This project has no display photo!
+mixin project(project, index) 
+  if (index == 0)
+    div.grid.details(id=`${project._id}`)
+      div
+        hgroup 
+          h1= project.name 
+          if (project.status == 'incomplete')
+            h2 To be ordered 
+          else if (project.status == 'pending')
+            h2 Pending order 
+          else if (project.status == 'ordered')
+            h2 Project ordered
+        p= project.desc
+      div.projectPhoto
+        p
+          box-icon(name='error' size='lg' color='var(--color)')
+        p This project has no display photo!
+  else
+    div.grid.details(id=`${project._id}` style='display: none;')
+      div
+        hgroup 
+          h1= project.name 
+          if (project.status == 'incomplete')
+            h2 To be ordered 
+          else if (project.status == 'pending')
+            h2 Pending order 
+          else if (project.status == 'ordered')
+            h2 Project ordered
+        p= project.desc
+      div.projectPhoto
+        p
+          box-icon(name='error' size='lg' color='var(--color)')
+        p This project has no display photo!
 
 doctype html
 head
   meta(charset='utf-8')
   meta(name='viewport' content='width=device-width, initial-scale=1')
   title Stock Tracker
-  meta(name='description' content='A minimalist layout for Login pages. Built with Pico CSS.')
+  meta(name='description' content='Project overview (dashboard) for Concordia College D&T.')
   link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
-  link(rel='canonical' href='https://picocss.com/examples/sign-in/')
   // Pico.css
   link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
   // Boxicons
   script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
-  // JQuery
-  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
-  // Custom styles for this example
+  // Stylesheet
   link(rel='stylesheet' href='static/css/custom.css')
 // Nav
 nav.container-fluid
@@ -67,23 +81,25 @@ main.container
   nav.projectNav
     ul
       li
-        a.contrast(active='') Current Projects
+        a.contrast(active='' onclick="show('incomplete')") Current Projects
       li
-        a.contrast Pending Orders
+        a.contrast(onclick="show('pending')") Pending Orders
       li
-        a.contrast Completed Orders
+        a.contrast(onclick="show('complete')") Completed Orders
   article.projectInfo(activeCategory='incomplete')
     if (newUser == false)
-      each project in projects
-        if (project.status == 'incomplete')
-          .incomplete 
-            +project(project)
-        else if (project.status == 'pending')
-          .pending(style='display: none') 
-            +project(project)
-        else if (project.status == 'ordered')
-          .complete(style='display: none')
-            +project(project)
+      .incomplete 
+        each project, index in projects
+          if (project.status == 'incomplete')
+            +project(project, index)
+      .pending(style='display: none') 
+        each project, index in projects
+          if (project.status == 'pending')
+            +project(project, index)
+      .complete(style='display: none')
+        each project, index in projects
+          if (project.status == 'ordered')
+            +project(project, index)
 
     a.round.edit-project(title='Edit Project')
       box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
@@ -102,9 +118,11 @@ footer.container-fluid
     a.secondary(href='https://github.com/picocss/examples/tree/master/sign-in/') Source code
   
   small.right
-    = `Signed in as ${user} `
+    = `Signed in as ${user.name} `
     | &bull; 
     a.secondary(href='/logout') Logout
 // ./ Footer
 // Minimal theme switcher
 script(src='static/js/theme-switcher.client.js')
+// Client-side scripts
+script(src='static/js/dashboard.client.js')

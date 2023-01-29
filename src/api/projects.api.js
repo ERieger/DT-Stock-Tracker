@@ -8,10 +8,14 @@ const Classes = require('../models/class.model');
 const Materials = require('../models/material.model');
 
 router.post('/add', async (req, res) => {
-    console.log(req.body, req.user)
+    let project = req.body;
+    project['owner'] = req.user.id;
+    
+    console.log(project, req.user)
+    
     try {
         console.log('Adding document');
-        await Projects.create(req.body)
+        await Projects.create(project)
             .then(async (doc) => {
                 try {
                     await Users.updateOne({ _id: req.user.id }, { $push: { projects: doc._id } });
