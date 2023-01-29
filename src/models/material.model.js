@@ -11,7 +11,7 @@ const Material = new Schema({
     id: String,
     name: String,
     price: Number,
-    dim: Dimensions
+    dim: Object
 });
 
 module.exports = mongoose.model('Material', Material);

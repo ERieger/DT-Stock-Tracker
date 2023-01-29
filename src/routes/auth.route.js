@@ -15,10 +15,10 @@ passport.use(new GoogleStrategy({
     FederatedCredentails.findOne({ provider: issuer, subject: profile.id }, async function (err, doc) {
         if (err) { return cb(err); }
         if (!doc) {
-            await User.create({ name: profile.displayName }, async function (err) {
+            await User.create({ name: profile.displayName }, async function (err, inserted) {
                 if (err) { return cb(err); }
 
-                var id = this.lastID;
+                var id = inserted._id;
                 await FederatedCredentails.create({ userId: id, provider: issuer, subject: profile.id }, function (err) {
                     if (err) { return cb(err); }
                     var user = {
@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
                 });
             });
         } else {
-            User.findOne({ id: doc.user_id }, function (err, doc) {
+            User.findById(mongoose.Types.ObjectId(doc.userId), function (err, doc) {
                 if (err) { return cb(err); }
                 if (!doc) { return cb(null, false); }
                 return cb(null, doc);
@@ -45,7 +45,7 @@ router.get('/login', function (req, res, next) {
 router.get('/login/federated/google', passport.authenticate('google'));
 
 router.get('/oauth2/redirect/google', passport.authenticate('google', {
-    successRedirect: '/dashboard',
+    successRedirect: '/',
     failureRedirect: '/login'
 }));
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');                                   // Modul
 const Schema = mongoose.Schema;
 
 const FederatedCredentials = new Schema({
+    userId: mongoose.Types.ObjectId,
     provider: String,
     subject: String,
     userId: String,

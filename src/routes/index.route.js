@@ -5,8 +5,11 @@ const connectEnsureLogin = require('connect-ensure-login');     // Handle page a
 const Users = require('../models/user.model');
 const Projects = require('../models/project.model');
 const Classes = require('../models/class.model');
+const { default: mongoose } = require('mongoose');
 
-router.get('/', (req, res) => {            // Homepage
+router.get('/', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {            // Homepage
+    console.log(req.user);
+
     res.render('dashboard');
 });
 
