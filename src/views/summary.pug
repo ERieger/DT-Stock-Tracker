@@ -1,3 +1,34 @@
+mixin tableEntry(code, piece)
+  tr 
+    th(scope="row") 1
+    th= code 
+    if (piece.type == 0)
+      th= `${piece.bins} sheet(s)`
+      th= `$${piece.unitPrice} / sheet`
+    else
+      th= `${piece.l / 1000} metre(s)`
+      th= `$${piece.unitPrice} / metre`
+    th= `$${piece.netPrice}`
+
+mixin classEntry(projectList)
+  each project, index in projectList
+    if (index != 'price')
+      details 
+        summary= `${index} - `
+          small.secondary= `$${project.price}`
+        table(role="grid")
+              thead 
+                tr
+                  th(scope="col") #
+                  th(scope="col") Code
+                  th(scope="col") Qty
+                  th(scope="col") Unit Price
+                  th(scope="col") Net Price 
+              tbody
+                each piece, index in project 
+                  if (index != 'price')
+                    +tableEntry(index, piece)
+
 doctype html
 head
   meta(charset='utf-8')
@@ -51,57 +82,12 @@ main.container
     .contentContainer
       h2.heading 
         | Order Summary
-        small.right $132.40
+        small.right= `$${summary.price}`
       .summaryContainer
-        details
-          summary 
-            | Class 1 - 
-            small.secondary $23.12
-          p Here is some information about the first class.
-        details
-          summary 
-            | Class 2 - 
-            small.secondary $51.92
-          p Here is the information about class 2
-        details
-          summary
-            | Class 3 - 
-            small.secondary $32.40
-          p Here is the information about class 3
-        details
-          summary
-            | Class 4 - 
-            small.secondary $24.96
-          table(role="grid")
-            thead 
-              tr
-                th(scope="col") #
-                th(scope="col") Code
-                th(scope="col") Qty
-                th(scope="col") Unit Price
-                th(scope="col") Net Price 
-            tbody 
-              tr 
-                th(scope="row") 1
-                th PTZ1023 
-                th 3 Sheets 
-                th $04.22
-                th $12.66
-              tr 
-                th(scope="row") 2
-                th SLD2101
-                th 1.25m
-                th $04.80
-                th $06.00
-              tr 
-                th(scope="row") 3
-                th ALS5020
-                th 3.00m
-                th $02.10
-                th $06.30
+        +classEntry(summary)
       a.round.download(title='Download as spreadsheet')
         box-icon(name='spreadsheet' size='sm' color='var(--contrast-hover)')
-      a.round.order(title='Mark as ordered')
+      a.round.order(title='Mark as ordered', onclick='$().order()')
         box-icon(name='check' size='sm' color='var(--form-element-valid-active-border-color)')
 // ./ Main
 // Footer
@@ -113,8 +99,10 @@ footer.container-fluid
     a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
   
   small.right
-    | Signed in &bull; 
+    = `Signed in as ${user.name} `
+    | &bull; 
     a.secondary(href='/logout') Logout
 // ./ Footer
 // Minimal theme switcher
 script(src='static/js/theme-switcher.client.js')
+script(src='static/js/project.client.js')

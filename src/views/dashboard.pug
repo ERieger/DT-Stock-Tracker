@@ -94,17 +94,17 @@ main.container
           if (project.status == 'incomplete')
             +project(project, first)
             - first = false;
-      .pending(style='display: none') 
+      .pending(style='display: none;') 
         - var first = true;
         each project in projects
           if (project.status == 'pending')
             +project(project, first)
             - first = false;
-      .complete(style='display: none')
+      .complete(style='display: none;')
         - var first = true;
-        each project, index in projects
+        each project in projects
           if (project.status == 'ordered')
-            +project(project, index)
+            +project(project, first)
             - first = false;
 
     a.round.edit-project(title='Edit Project')

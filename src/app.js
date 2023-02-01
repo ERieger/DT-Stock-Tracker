@@ -80,7 +80,6 @@ app.use('/', indexRouter);
 app.use('/', authRouter);
 app.use('/api/materials', materialsApi);
 app.use('/api/projects', projectsApi);
-app.use('/api/packer/', packerApi);
 
 // Start server listening on selected port
 app.listen(config.network.port, () => {

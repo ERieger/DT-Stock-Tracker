@@ -5,6 +5,9 @@ const connectEnsureLogin = require('connect-ensure-login');     // Handle page a
 const Users = require('../models/user.model');
 const Projects = require('../models/project.model');
 const Classes = require('../models/class.model');
+
+const Summary = require('../api/packer.api.js');
+
 const { default: mongoose } = require('mongoose');
 
 // The dashboard (home) page
@@ -37,8 +40,16 @@ router.get('/manage', (req, res) => {
     res.render('manage');
 });
 
-router.get('/summary', (req, res) => {
-    res.render('summary');
+router.get('/summary', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    let projectList = await Summary.collectPieces();
+    let summary = await Summary.calcPrice(projectList);
+
+    res.render('summary', 
+        {
+            user: req.user,
+            summary: summary
+        }
+    );
 });
 
 router.get('/authtest', connectEnsureLogin.ensureLoggedIn(), (req, res) => {

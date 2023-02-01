@@ -193,7 +193,43 @@ $.fn.save = function () {
   }
 };
 
+$.fn.order = function () {
+  $.ajax({
+    url: '/api/projects/order',
+    method: 'POST',
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (err) {
+      console.log(err);
+    }
+  });
+};
+
 $(document).ready(function () {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  let edit = urlParams.get('edit');
+
   $().genDrops();
-  $('.pieces').newPiece();
+
+  if (edit=='true') {
+    let id = urlParams.get('id');
+    console.log(id);
+
+    $.ajax({
+      url: '/api/projects/get',
+      method: 'GET',
+      data: { id: id },
+      success: function (data) {
+
+      },
+      error: function (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    $('.pieces').newPiece();
+  }
 });

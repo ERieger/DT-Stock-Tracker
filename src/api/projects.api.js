@@ -29,4 +29,14 @@ router.post('/add', async (req, res) => {
     }
 });
 
+router.post('/order', async (req, res) => {
+    try {
+        await Projects.updateMany({ 'status': 'pending'}, { $set: { 'status': 'ordered'}});
+        
+        res.send('Projects successfully ordered');
+    } catch (err) {
+        res.send(`Error: ${err}`);
+    }
+});
+
 module.exports = router;
