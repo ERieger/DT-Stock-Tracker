@@ -28,6 +28,7 @@ const authRouter = require('./routes/auth.route');
 const indexRouter = require('./routes/index.route');
 const materialsApi = require('./api/material.api');
 const projectsApi = require('./api/projects.api');
+const packerApi = require('./api/packer.api');
 
 // Connect to database - load values form environment variables
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`, {
@@ -79,6 +80,7 @@ app.use('/', indexRouter);
 app.use('/', authRouter);
 app.use('/api/materials', materialsApi);
 app.use('/api/projects', projectsApi);
+app.use('/api/packer/', packerApi);
 
 // Start server listening on selected port
 app.listen(config.network.port, () => {

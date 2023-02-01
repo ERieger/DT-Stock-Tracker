@@ -1,5 +1,5 @@
-mixin project(project, index) 
-  if (index == 0)
+mixin project(project, first) 
+  if (first == true)
     div.grid.details(id=`${project._id}`)
       div
         hgroup 
@@ -89,17 +89,23 @@ main.container
   article.projectInfo(activeCategory='incomplete')
     if (newUser == false)
       .incomplete 
-        each project, index in projects
+        - var first = true;
+        each project in projects
           if (project.status == 'incomplete')
-            +project(project, index)
+            +project(project, first)
+            - first = false;
       .pending(style='display: none') 
-        each project, index in projects
+        - var first = true;
+        each project in projects
           if (project.status == 'pending')
-            +project(project, index)
+            +project(project, first)
+            - first = false;
       .complete(style='display: none')
+        - var first = true;
         each project, index in projects
           if (project.status == 'ordered')
             +project(project, index)
+            - first = false;
 
     a.round.edit-project(title='Edit Project')
       box-icon(name='pencil' size='sm' color='var(--contrast-hover)')

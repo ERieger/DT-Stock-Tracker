@@ -25,7 +25,7 @@ function show(category) {
 
             incomplete.style.display = 'block';
             pending.style.display = 'none';
-            complete.style.display = 'block';
+            complete.style.display = 'none';
             break;
     }
 }
@@ -54,7 +54,7 @@ function previous() {
     let category = document.querySelector('.projectInfo').getAttribute('activeCategory');
     let container = document.querySelector(`.${category}`);
 
-    for (var i=container.childElementCount-1; i>0; i++) {
+    for (var i=container.childElementCount-1; i>0; i--) {
         let child = container.children[i];
         let nextchild = container.children[i-1];
 

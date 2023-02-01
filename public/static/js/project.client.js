@@ -156,6 +156,7 @@ $.fn.save = function () {
     for (var i=0; i<pieces.length; i+=4) {
       let piece = {
         material: pieces[i].value,
+        type: pieces[i].options[pieces[i].selectedIndex].getAttribute('type'),
         qty: pieces[i+3].value,
         dim: {
           l: pieces[i+1].value,
