@@ -22,8 +22,39 @@ router.post('/add', async (req, res) => {
                 } catch (err) {
                     res.send(`Error: ${err}`);
                 }
-                res.send('Project successfully added.')
+                console.log(doc._id);
+                res.send(doc._id);
             });
+    } catch (err) {
+        res.send(`Error: ${err}`);
+    }
+});
+
+router.post('/update', async (req, res) => {
+    let project = req.body;
+
+    try {
+        await Projects.updateOne({_id: project.id}, { $set: project.project })
+    } catch (err) {
+        res.send(`Error: ${err}`);
+    }
+});
+
+router.post('/fetch', async (req, res) => {
+    try {
+        let project = await Projects.findById(req.body.id);
+
+        res.send(project);
+    } catch (err) {
+        res.send(`Error: ${err}`);
+    }
+});
+
+router.post('/orderone', async (req, res) => {
+    try {
+        await Projects.updateOne({_id: req.body.id }, { $set: { status: 'pending' }});
+
+        res.send('Project successfully ordered')
     } catch (err) {
         res.send(`Error: ${err}`);
     }

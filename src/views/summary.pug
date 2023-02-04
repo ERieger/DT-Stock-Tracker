@@ -17,17 +17,17 @@ mixin classEntry(projectList)
         summary= `${index} - `
           small.secondary= `$${project.price}`
         table(role="grid")
-              thead 
-                tr
-                  th(scope="col") #
-                  th(scope="col") Code
-                  th(scope="col") Qty
-                  th(scope="col") Unit Price
-                  th(scope="col") Net Price 
-              tbody
-                each piece, index in project 
-                  if (index != 'price')
-                    +tableEntry(index, piece)
+          thead 
+            tr
+              th(scope="col") #
+              th(scope="col") Code
+              th(scope="col") Qty
+              th(scope="col") Unit Price
+              th(scope="col") Net Price 
+          tbody
+            each piece, index in project 
+              if (index != 'price')
+                +tableEntry(index, piece)
 
 doctype html
 head

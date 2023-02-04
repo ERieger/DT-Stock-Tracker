@@ -67,3 +67,17 @@ function previous() {
         }
     }
 }
+
+function edit() {
+    let nodes = document.querySelectorAll('.incomplete div.grid.details');
+
+    var project;
+
+    nodes.forEach((node) => {
+        if (node.style.display == '') {
+            project = node.id;
+        }
+    });
+
+    window.location.href=`/project?edit=true&id=${project}`
+}

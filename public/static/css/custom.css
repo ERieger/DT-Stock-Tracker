@@ -247,6 +247,20 @@ textarea {
   padding: 0;
 }
 
+hgroup {
+  margin-bottom: 15px;
+}
+.desc {
+  height: 100px;
+  margin: 0;
+}
+
+.pieceList {
+  height: 240px !important;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
 div .projectPhoto {
   background-color: var(--secondary-focus);
   border-radius: 0 var(--border-radius) var(--border-radius) 0;

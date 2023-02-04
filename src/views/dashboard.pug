@@ -1,3 +1,14 @@
+mixin tableEntry(index, piece)
+  tr 
+    th(scope="row")= index+1
+    th= piece.material
+    th= piece.dim.l
+    if (piece.dim.w == '')
+      th= ' - '
+    else
+      th= piece.dim.w 
+    th= piece.qty
+  
 mixin project(project, first) 
   if (first == true)
     div.grid.details(id=`${project._id}`)
@@ -10,7 +21,19 @@ mixin project(project, first)
             h2 Pending order 
           else if (project.status == 'ordered')
             h2 Project ordered
-        p= project.desc
+        p.desc= project.desc
+        div.pieceList
+          table(role="grid")
+            thead 
+              tr 
+                th(scope="col") #
+                th(scope="col") Code 
+                th(scope="col") Length 
+                th(scope="col") Width 
+                th(scope="col") Quantity
+            tbody
+              each piece, index in project.pieces
+                +tableEntry(index, piece)
       div.projectPhoto
         p
           box-icon(name='error' size='lg' color='var(--color)')
@@ -26,7 +49,19 @@ mixin project(project, first)
             h2 Pending order 
           else if (project.status == 'ordered')
             h2 Project ordered
-        p= project.desc
+        p.desc= project.desc
+        div.pieceList
+          table(role="grid")
+            thead 
+              tr 
+                th(scope="col") #
+                th(scope="col") Code 
+                th(scope="col") Length 
+                th(scope="col") Width 
+                th(scope="col") Quantity
+            tbody
+              each piece, index in project.pieces
+                +tableEntry(index, piece)
       div.projectPhoto
         p
           box-icon(name='error' size='lg' color='var(--color)')
@@ -94,6 +129,8 @@ main.container
           if (project.status == 'incomplete')
             +project(project, first)
             - first = false;
+        a.round.edit-project(title='Edit Project' onclick='edit()')
+          box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
       .pending(style='display: none;') 
         - var first = true;
         each project in projects
@@ -107,8 +144,6 @@ main.container
             +project(project, first)
             - first = false;
 
-    a.round.edit-project(title='Edit Project')
-      box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
     a.round.previous-project(title='Previous Project' onclick='previous()')
       box-icon(name='chevron-left' size='sm' color='var(--contrast-hover)')
     a.round.next-project(title='Next Project' onclick='next()')

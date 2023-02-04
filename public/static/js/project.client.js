@@ -70,15 +70,16 @@ $.fn.newPiece = function (piece) {
       `
     );
   } else if (piece != undefined) {
+    console.log(piece);
     container.append(
       `
       <li>
         <div class="grid">
-          <select id="material" required>
-            ${$().genDrops(piece.code)}
+          <select id="material" onchange='updateFields(this);' required>
+            ${dropdownText}
           </select>
-          <input id="length" type="number" placeholder="Length" value=${piece.length} required>
-          <input id="width" type="number" placeholder="Width" value=${piece.length ? piece.length : ''} disabled>
+          <input id="length" type="number" placeholder="Length" value=${piece.dim.l} required>
+          <input id="width" type="number" placeholder="Width" ${piece.dim.w ? "value="+piece.dim.w : ''} ${piece.dim.w ? '' : 'disabled' }>
           <input id="quantity" type="number" placeholder="Qty" min=0 max=16 value=${piece.qty} required>
           <a class="round remove" title="remove piece" onclick="$(this).deletePiece()"><box-icon name="trash" color=var(--form-element-invalid-active-border-color)></box-icon></a>
           <a class="round add" title="add new piece" onclick='$(".pieces").newPiece()'><box-icon name="plus" color=var(--contrast-hover)></box-icon></a>
@@ -101,19 +102,16 @@ $.fn.validate = function () {
 
   inputs.each(function (index) {
     if ($(this).val()) {
-      console.log(`Element with index ${index} has value`);
 
       let type = $(this).attr('type');
       let value = $(this).val();
 
       switch (type) {
         case "text":
-          console.log("Input has type text");
           $(this).val(value.replace(/[^a-zA-Z0-9 ]/g, '').trim());
           $(this).attr("aria-invalid", false);
           break;
         case "number":
-          console.log("Input has type number");
           try {
             $(this).val(parseInt(value));
             $(this).attr("aria-invalid", false);
@@ -126,12 +124,10 @@ $.fn.validate = function () {
           break;
         default:
           $(this).attr("aria-invalid", false);
-          console.log(type);
           break;
       }
 
     } else {
-      console.log(`Element with index ${index} does not have value`);
       $(this).attr("aria-invalid", true);
       passed += 1;
     }
@@ -177,19 +173,36 @@ $.fn.save = function () {
       status: 'incomplete'
     };
 
-    console.log(project);
-
-    $.ajax({
-      url: '/api/projects/add',
-      method: "POST",
-      data: project,
-      success: function (data) {
-        return true;
-      },
-      error: function (err) {
-        console.error(err);
-      }
-    });
+    if ($('main.container').attr('projectId') == undefined) {
+      $.ajax({
+        url: '/api/projects/add',
+        method: "POST",
+        data: project,
+        success: function (data) {
+          $('main.container').attr('projectId', data);
+          return true;
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    } else {
+      $.ajax({
+        url: '/api/projects/update',
+        method: "POST",
+        data: {
+          id: $('main.container').attr('projectId'),
+          project: project,
+        },
+        success: function (data) {
+          console.log(data);
+          return true;
+        },
+        error: function (err) {
+          console.error(err);
+        }
+      });
+    }
   }
 };
 
@@ -201,10 +214,34 @@ $.fn.order = function () {
       console.log(data);
     },
     error: function (err) {
-      console.log(err);
+      console.error(err);
     }
   });
 };
+
+$.fn.orderOne = function () {
+  $.ajax({
+    url: '/api/projects/orderone',
+    method: 'POST',
+    data: { id: $('main.container').attr('projectId') },
+    success: function (data) {
+      console.log(data);
+    },
+    error: function (err) {
+      console.error(err);
+    }
+  });
+};
+
+$.fn.selectClass = function (className) {
+  var select = document.getElementById("class");
+
+  for (var i=0; i<select.options.length; i++) {
+    if (select.options[i].value == className) {
+      select.options[i].selected = true;
+    }
+  }
+}
 
 $(document).ready(function () {
   const queryString = window.location.search;
@@ -212,21 +249,27 @@ $(document).ready(function () {
 
   let edit = urlParams.get('edit');
 
-  $().genDrops();
-
   if (edit=='true') {
     let id = urlParams.get('id');
-    console.log(id);
 
     $.ajax({
-      url: '/api/projects/get',
-      method: 'GET',
+      url: '/api/projects/fetch',
+      method: 'POST',
       data: { id: id },
       success: function (data) {
+        console.log(data);
 
+        console.log(data.pieces);
+
+        $('#title').val(data.name);
+        $().selectClass(data.class);
+        $('#desc').val(data.desc);
+        data.pieces.forEach((piece) => {
+          $('.pieces').newPiece(piece);
+        });
       },
       error: function (err) {
-        console.log(err);
+        console.error(err);
       }
     });
   } else {
