@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 const mongoose = require('mongoose');
 const packer = require('guillotine-packer').packer;
+const ExcelJS = require('exceljs');
 
 const Users = require('../models/user.model');
 const Projects = require('../models/project.model');
@@ -83,7 +84,9 @@ let summaryGen = {
                         height: parseInt(piece.dim.l),
                     };
     
-                    for(var i=0;i<piece.qty;i++) collected[project.class][piece.material].push(entry);
+                    for(var i=0;i<piece.qty;i++) {
+                        collected[project.class][piece.material].push(entry);
+                    }
                 }
                 else {
                     collected[project.class][piece.material].l += (piece.dim.l * piece.qty);
@@ -92,6 +95,28 @@ let summaryGen = {
         });
     
         return collected;
+    },
+    excelGen: async function (summary) {
+        const workbook = new ExcelJS.Workbook();
+
+        /* File metadata */
+        workbook.creator = "Stock-Tracker";
+        workbook.lastModifiedBy = "Stock-Tracker";
+        workbook.created = new Date();
+        workbook.modified = new Date();
+
+        const worksheet = workbook.addWorksheet('Summary');
+
+        worksheet.getCell('A1').value = 'Beans';
+        worksheet.getCell('B1').value = 'More Beans';
+        worksheet.getCell('C1').value = 'All the Beans';
+
+        const r3 = worksheet.getRow(3);
+        r3.values = [1, 2, 3, 4, 5];
+
+        return workbook;
+        
+        //workbook.xlsx.writeFile('workbook.xlsx');
     }
 }
 

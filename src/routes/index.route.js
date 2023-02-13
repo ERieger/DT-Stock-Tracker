@@ -62,12 +62,23 @@ router.get('/summary', connectEnsureLogin.ensureLoggedIn(), async (req, res) => 
     let projectList = await Summary.collectPieces();
     let summary = await Summary.calcPrice(projectList);
 
+    console.log(projectList);
+    console.log(summary);
+
     res.render('summary',
         {
             user: req.user,
             summary: summary
         }
     );
+});
+
+router.get('/summaryFile', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
+    let workbook = await Summary.excelGen();
+
+    res.setHeader("content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    res.attachment("summary.xlsx");
+    workbook.xlsx.write(res).then(() => {res.end()});
 });
 
 router.get('/authtest', connectEnsureLogin.ensureLoggedIn(), (req, res) => {

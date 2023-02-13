@@ -51,8 +51,12 @@ router.post('/fetch', async (req, res) => {
 });
 
 router.post('/orderone', async (req, res) => {
+    let project = req.body;
+
+    console.log(project);
+    
     try {
-        await Projects.updateOne({_id: req.body.id }, { $set: { status: 'pending' }});
+        await Projects.updateOne({_id: project.id }, { $set: { status: 'pending' }});
 
         res.send('Project successfully ordered')
     } catch (err) {

@@ -47,6 +47,7 @@ function updateFields(dropdown) {
 
 /* Insert a new piece into the selected div or element */
 $.fn.newPiece = function (piece) {
+  console.log(dropdownText);
   "use strict";
 
   let container = $(this);
@@ -87,8 +88,10 @@ $.fn.newPiece = function (piece) {
       </li>
       `
     );
+
+    $(`.pieces li:last-child #material [value=${piece.material}]`).prop('selected', true);
   }
-  $('#componentTitle').text(`Components (${$('.pieces li').length})`)
+  $('#componentTitle').text(`Components (${$('.pieces li').length})`);
 };
 
 /* Validate any required input fields, return true if valid */
@@ -220,17 +223,22 @@ $.fn.order = function () {
 };
 
 $.fn.orderOne = function () {
-  $.ajax({
-    url: '/api/projects/orderone',
-    method: 'POST',
-    data: { id: $('main.container').attr('projectId') },
-    success: function (data) {
-      console.log(data);
-    },
-    error: function (err) {
-      console.error(err);
-    }
-  });
+  let valid = $().validate();
+
+  if (valid == true) {
+    $.ajax({
+      url: '/api/projects/orderone',
+      method: 'POST',
+      data: { id: $('.container').attr('projectId') },
+      success: function (data) {
+        console.log(data);
+        windows.location.href = '/';
+      },
+      error: function (err) {
+        console.error(err);
+      }
+    });
+  }
 };
 
 $.fn.selectClass = function (className) {
@@ -248,9 +256,11 @@ $(document).ready(function () {
   const urlParams = new URLSearchParams(queryString);
 
   let edit = urlParams.get('edit');
-
+  
   if (edit=='true') {
+    $().genDrops();
     let id = urlParams.get('id');
+    $('main.container').attr('projectId', id);
 
     $.ajax({
       url: '/api/projects/fetch',
@@ -273,6 +283,7 @@ $(document).ready(function () {
       }
     });
   } else {
+    $().genDrops();
     $('.pieces').newPiece();
   }
 });
