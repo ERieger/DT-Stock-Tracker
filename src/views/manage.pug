@@ -1,4 +1,6 @@
 doctype html
+include ../mixins/material.mixin.pug
+
 head
   meta(charset='utf-8')
   meta(name='viewport' content='width=device-width, initial-scale=1')
@@ -58,64 +60,14 @@ main#materialContainer.container
       input#length(type='number' placeholder='Length' required=true)
       input#width(type='number' placeholder='Width' required=true)
       input#thickness(type='number' placeholder='Thickness' required=true)
-    a.round.reset(title='reset inputs')
+    a.round.reset(title='reset inputs' onclick="resetInputs()")
       box-icon(name='reset' color='var(--contrast-hover)')
-    a.round.create(title='add new material')
+    a.round.create(title='add new material' onclick="addMaterial()")
       box-icon(name='check' color='var(--form-element-valid-active-border-color)')
   .databaselist
     ul
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-        a.round.remove(title='remove material')
-          box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
-        a.round.edit(title='edit material')
-          box-icon(name='pencil'  color='var(--contrast-hover)')
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-      li
-        .grid
-          input(disabled='' placeholder='Board')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
-          input(disabled='')
+      each item in materials
+        +material-row(item.type, item.name, item.code, item.length, item.width, item.thickness, item.id)
 // ./ Main
 // Footer
 footer.container-fluid
@@ -124,11 +76,11 @@ footer.container-fluid
     a.secondary(href='https://picocss.com') Pico
     |  &bull; 
     a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
-  
+
   small.right
     | Signed in &bull; 
     a.secondary(href='/logout') Logout
 // ./ Footer
 // Minimal theme switcher
 script(src='/static/js/theme-switcher.client.js')
-script(src='static/js/manage-project.client.js')
+script(src='/static/js/material-management.client.js')

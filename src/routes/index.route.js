@@ -5,6 +5,7 @@ const connectEnsureLogin = require('connect-ensure-login');     // Handle page a
 const Users = require('../models/user.model');
 const Projects = require('../models/project.model');
 const Classes = require('../models/class.model');
+const Materials = require('../models/material.model');
 
 const Summary = require('../api/packer.api.js');
 
@@ -12,12 +13,12 @@ const { default: mongoose } = require('mongoose');
 
 // The dashboard (home) page
 router.get('/', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {            // Homepage
-    let userProjects = await Projects.find({owner: req.user.id}); // Fetch the user's projects
-    
-    let newAccount = userProjects.len==0 ? true : false;    // Is the account new (do they have any projects)
+    let userProjects = await Projects.find({ owner: req.user.id }); // Fetch the user's projects
+
+    let newAccount = userProjects.len == 0 ? true : false;    // Is the account new (do they have any projects)
 
     // Send data to rendering engine (this page is server-side rendered)
-    res.render('dashboard', 
+    res.render('dashboard',
         {
             projects: userProjects,
             newUser: newAccount,
@@ -36,15 +37,32 @@ router.get('/project', connectEnsureLogin.ensureLoggedIn(), async (req, res) => 
     );
 });
 
-router.get('/manage', (req, res) => {
-    res.render('manage');
+router.get('/manage', async (req, res) => {
+    let materials = await Materials.find({});
+    let formattedMaterials = [];
+
+    materials.forEach((material) => {
+        formattedMaterials.push({
+            type: material.type,
+            name: material.name,
+            code: material.id,
+            length: material.dim.l,
+            width: material.dim.w,
+            thickness: material.dim.h,
+            id: material._id
+        });
+    });
+
+    res.render('manage', {
+        materials: formattedMaterials
+    });
 });
 
 router.get('/summary', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     let projectList = await Summary.collectPieces();
     let summary = await Summary.calcPrice(projectList);
 
-    res.render('summary', 
+    res.render('summary',
         {
             user: req.user,
             summary: summary

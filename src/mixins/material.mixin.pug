@@ -1,0 +1,18 @@
+mixin material-row(type, name, code, length, width, thickness, id)
+    li
+        .grid
+            if type == 0 
+                input(disabled='' value='Board')
+            else if type == 1 
+                input(disabled='' value='Plank')
+            else 
+                input(disabled='' value='Dowel')
+            input(disabled='' value=name)
+            input(disabled='' value=code)
+            input(disabled='' value=length)
+            input(disabled='' value=width)
+            input(disabled='' value=thickness)
+        a.round.remove(title='remove material' onclick="deleteMaterial('"+ id +"')")
+            box-icon(name='trash' color='var(--form-element-invalid-active-border-color)')
+        a.round.edit(title='edit material')
+            box-icon(name='pencil' color='var(--contrast-hover)')

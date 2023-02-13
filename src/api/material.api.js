@@ -13,4 +13,26 @@ router.get('/list', async (req, res) => {
     res.send(materials);
 });
 
+router.post('/add', async (req, res) => {
+    console.log(req.body);
+
+    try {
+        await Materials.create(req.body);
+        res.send('success.');
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+router.post('/delete', async (req, res) => {
+    console.log(req.body.material);
+
+    try {
+        await Materials.deleteOne({ _id: req.body.material })
+        res.send('success.');
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 module.exports = router;
