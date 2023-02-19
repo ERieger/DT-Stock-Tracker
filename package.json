@@ -2,10 +2,11 @@
   "name": "dt-stock-tracker",
   "version": "2.0.0",
   "description": "<h1 align=\"center\">DT-Stock-Tracker</h1> <p align=\"center\">DT-Stock-Tracker is an open source and fully self hosted system for automating the process of material ordering. It has been custom built using robust technologies.</p>",
-  "main": "app.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon ./src/app.js"
+    "start-dev": "nodemon ./src/app.js",
+    "start": "node ./src/app.js"
   },
   "repository": {
     "type": "git",
