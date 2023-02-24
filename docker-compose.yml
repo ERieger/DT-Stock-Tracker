@@ -1,19 +1,11 @@
 version: "3.1"
 services:
   webhost:
-    image: "node:19.5.0"
+    build: .
+    ports:
+      - 3000:3000
+    env_file: .env
     restart: unless-stopped
-    user: "node"
-    working_dir: /home/node/dt-stock-tracker
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./:/home/node/dt-stock-tracker
-    expose:
-      - "3000"
-    command: "npm start"
-    depends_on:
-      - mongo
   mongo:
     image: mongo
     restart: unless-stopped

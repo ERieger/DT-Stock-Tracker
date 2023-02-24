@@ -12,7 +12,6 @@ const path = require('path');                                   // Interact with
 const config = require("./config/main.config.json")
 
 const dotenv = require('dotenv');                               // Require env library
-dotenv.config({ path: `${__dirname}/config/.env` });            // Set env location
 
 // Initialise app
 const app = express();                      // Define app
