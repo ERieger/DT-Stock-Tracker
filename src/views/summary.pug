@@ -1,0 +1,108 @@
+mixin tableEntry(code, piece)
+  tr 
+    th(scope="row") 1
+    th= code 
+    if (piece.type == 0)
+      th= `${piece.bins} sheet(s)`
+      th= `$${piece.unitPrice} / sheet`
+    else
+      th= `${piece.l / 1000} metre(s)`
+      th= `$${piece.unitPrice} / metre`
+    th= `$${piece.netPrice}`
+
+mixin classEntry(projectList)
+  each project, index in projectList
+    if (index != 'price')
+      details 
+        summary= `${index} - `
+          small.secondary= `$${project.price}`
+        table(role="grid")
+          thead 
+            tr
+              th(scope="col") #
+              th(scope="col") Code
+              th(scope="col") Qty
+              th(scope="col") Unit Price
+              th(scope="col") Net Price 
+          tbody
+            each piece, index in project 
+              if (index != 'price')
+                +tableEntry(index, piece)
+
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='A minimalist layout for Login pages. Built with Pico CSS.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  link(rel='canonical' href='https://picocss.com/examples/sign-in/')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // JQuery
+  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
+  // Custom styles for this page
+  link(rel='stylesheet' href='static/css/custom.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+        small.secondary  - Order Summary
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Home
+          li
+            a(href='./project') New Project
+          li
+            a(href='./summary') Order Summaries
+          li
+            a(href='./manage') Manage Materials
+// ./ Nav
+// Main
+main.container
+  article.grid
+    .contentContainer
+      h2.heading 
+        | Order Summary
+        small.right= `$${summary.price}`
+      .summaryContainer
+        +classEntry(summary)
+      a.round.download(title='Download as spreadsheet')
+        box-icon(name='spreadsheet' size='sm' color='var(--contrast-hover)')
+      a.round.order(title='Mark as ordered', onclick='$().order()')
+        box-icon(name='check' size='sm' color='var(--form-element-valid-active-border-color)')
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
+  
+  small.right
+    = `Signed in as ${user.name} `
+    | &bull; 
+    a.secondary(href='/logout') Logout
+// ./ Footer
+// Minimal theme switcher
+script(src='static/js/theme-switcher.client.js')
+script(src='static/js/project.client.js')

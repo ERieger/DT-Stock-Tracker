@@ -1,0 +1,12 @@
+mixin project-card(name='Title', description='Description', id='id displayed here', image='/static/images/Table.jpg')
+    .col-md-4
+        .card.mb-4.shadown-sm
+            .card-img-top
+                img.bd-placeholder-img.p-2(src=image height="100%" width="100%" alt="Project picture." aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice")
+            .card-body
+                h5.card-title= name
+                p.card-text= description
+                button.btn.btn-outline-secondary.btn-sm Edit
+                span.badge.badge-warning
+            .card-footer
+                small.text-muted ID: #{id}

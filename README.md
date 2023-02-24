@@ -7,26 +7,31 @@
 * **Secure -** Authentication is handeled by google's trusted Auth APIs. Users will already be familiar with the login flow.
 * **Simple -** A simple and sleek UI built on the latest version of bootstrap helps simplify the user experience.
 ## Requirements
-* Python 3
+* NodeJS Server
 * MongoDB Instance
-* Dependencies from requirements.txt
+* Dependencies as defined in the `package.json` file developer dependencies are optional
 * Google cloud application with oAuth app configured
-* Domain
+* Domain for a production deployment
 ## Installation and Usage
 1) Clone the project
 ```git
 git clone https://github.com/ERieger/DT-Stock-Tracker.git
 ```
-2) Create `mongo_uri.py` file in the root folder containing a valid database connection string.
-```python
-uri = [YOUR VALID CONNECTION STRING]
-```
+2) Create a `/src/config/.env` file and fill in the appropriate varibles.
+* `MONGO_DATABASE` - The name of the application database.
+* `MONGO_USER` - The database username.
+* `MONGO_PASSWORD` - The database password.
+* `MONGO_HOST` - The hostname/ip/domain of the mongo database.
+* `MONGO_PORT` - The port of the database (mongo default is 27017).
+* `GOOGLE_CLIENT_ID` - The client ID available in your google app console.
+* `GOOGLE_CLIENT_SECRET` - The client secret available in your google app console.
+* `COOKIE_KEY` - A secure key used to generate the auth cookies.
 3) Install all required dependencies with
 ```bash
-pip3 install -R requirements.txt
+npm i
 ```
-6) Start the server with:
+6) Start the development server with:
 ```bash
-python3 server.py
+npm run start-dev
 ```
-7) For testing navigate to `localhost:5500/login` (or the domain configured in your google oAuth flow.
+7) For testing navigate to `localhost:3000/login` (or the domain configured in your google oAuth flow.

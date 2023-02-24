@@ -1,0 +1,169 @@
+mixin tableEntry(index, piece)
+  tr 
+    th(scope="row")= index+1
+    th= piece.material
+    th= piece.dim.l
+    if (piece.dim.w == '')
+      th= ' - '
+    else
+      th= piece.dim.w 
+    th= piece.qty
+  
+mixin project(project, first) 
+  if (first == true)
+    div.grid.details(id=`${project._id}`)
+      div
+        hgroup 
+          h1= project.name 
+          if (project.status == 'incomplete')
+            h2 To be ordered 
+          else if (project.status == 'pending')
+            h2 Pending order 
+          else if (project.status == 'ordered')
+            h2 Project ordered
+        p.desc= project.desc
+        div.pieceList
+          table(role="grid")
+            thead 
+              tr 
+                th(scope="col") #
+                th(scope="col") Code 
+                th(scope="col") Length 
+                th(scope="col") Width 
+                th(scope="col") Quantity
+            tbody
+              each piece, index in project.pieces
+                +tableEntry(index, piece)
+      div.projectPhoto
+        p
+          box-icon(name='error' size='lg' color='var(--color)')
+        p This project has no display photo!
+  else
+    div.grid.details(id=`${project._id}` style='display: none;')
+      div
+        hgroup 
+          h1= project.name 
+          if (project.status == 'incomplete')
+            h2 To be ordered 
+          else if (project.status == 'pending')
+            h2 Pending order 
+          else if (project.status == 'ordered')
+            h2 Project ordered
+        p.desc= project.desc
+        div.pieceList
+          table(role="grid")
+            thead 
+              tr 
+                th(scope="col") #
+                th(scope="col") Code 
+                th(scope="col") Length 
+                th(scope="col") Width 
+                th(scope="col") Quantity
+            tbody
+              each piece, index in project.pieces
+                +tableEntry(index, piece)
+      div.projectPhoto
+        p
+          box-icon(name='error' size='lg' color='var(--color)')
+        p This project has no display photo!
+
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='Project overview (dashboard) for Concordia College D&T.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // Stylesheet
+  link(rel='stylesheet' href='static/css/custom.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+        small.secondary  - Dashboard
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Dashboard
+          li
+            a(href='./project') New Project
+          li
+            a(href='./summary') Order Summary
+          li
+            a(href='./manage') Manage Database
+// ./ Nav
+// Main
+main.container
+  nav.projectNav
+    ul
+      li
+        a.contrast(active='' onclick="show('incomplete')") Current Projects
+      li
+        a.contrast(onclick="show('pending')") Pending Orders
+      li
+        a.contrast(onclick="show('complete')") Completed Orders
+  article.projectInfo(activeCategory='incomplete')
+    if (newUser == false)
+      .incomplete 
+        - var first = true;
+        each project in projects
+          if (project.status == 'incomplete')
+            +project(project, first)
+            - first = false;
+        a.round.edit-project(title='Edit Project' onclick='edit()')
+          box-icon(name='pencil' size='sm' color='var(--contrast-hover)')
+      .pending(style='display: none;') 
+        - var first = true;
+        each project in projects
+          if (project.status == 'pending')
+            +project(project, first)
+            - first = false;
+      .complete(style='display: none;')
+        - var first = true;
+        each project in projects
+          if (project.status == 'ordered')
+            +project(project, first)
+            - first = false;
+
+    a.round.previous-project(title='Previous Project' onclick='previous()')
+      box-icon(name='chevron-left' size='sm' color='var(--contrast-hover)')
+    a.round.next-project(title='Next Project' onclick='next()')
+      box-icon(name='chevron-right' size='sm' color='var(--contrast-hover)')
+
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/picocss/examples/tree/master/sign-in/') Source code
+  
+  small.right
+    = `Signed in as ${user.name} `
+    | &bull; 
+    a.secondary(href='/logout') Logout
+// ./ Footer
+// Minimal theme switcher
+script(src='static/js/theme-switcher.client.js')
+// Client-side scripts
+script(src='static/js/dashboard.client.js')

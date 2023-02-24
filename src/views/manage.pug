@@ -1,0 +1,86 @@
+doctype html
+include ../mixins/material.mixin.pug
+
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Stock Tracker
+  meta(name='description' content='Materials database management for Concordia College D&T.')
+  link(rel='shortcut icon' href='https://picocss.com/favicon.ico')
+  // Pico.css
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  // Boxicons
+  script(src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js')
+  // JQuery
+  script(src='https://unpkg.com/jquery@3.3.1/dist/jquery.min.js')
+  // Stylesheet
+  link(rel='stylesheet' href='/static/css/custom.css')
+// Nav
+nav.container-fluid
+  ul
+    li
+      a.contrast(href='./' onclick='event.preventDefault()')
+        strong Concordia Design and Technologies
+        small.secondary  - Manage Materials
+  ul
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Theme
+        ul(role='listbox')
+          li
+            a(href='#' data-theme-switcher='auto') Auto
+          li
+            a(href='#' data-theme-switcher='light') Light
+          li
+            a(href='#' data-theme-switcher='dark') Dark
+    li
+      details(role='list' dir='rtl')
+        summary.secondary(aria-haspopup='listbox' role='link') Pages
+        ul(role='listbox')
+          li
+            a(href='/') Home
+          li
+            a(href='./project') New Project
+          li
+            a(href='./summary') Order Summaries
+          li
+            a(href='./manage') Manage Materials
+// ./ Nav
+// Main
+main#materialContainer.container
+  article.interaction
+    .grid
+      select#type(required=true)
+        option(value='' selected=true hidden=true disabled='') Type
+        option(value='0') Board
+        option(value='1') Plank
+        option(value='2') Dowel
+      input#name(type='text' placeholder='Name' required=true)
+      input#code(type='text' placeholder='Code' required=true)
+      input#length(type='number' placeholder='Length' required=true)
+      input#width(type='number' placeholder='Width' required=true)
+      input#thickness(type='number' placeholder='Thickness' required=true)
+    a.round.reset(title='reset inputs' onclick="resetInputs()")
+      box-icon(name='reset' color='var(--contrast-hover)')
+    a.round.create(title='add new material' onclick="addMaterial()")
+      box-icon(name='check' color='var(--form-element-valid-active-border-color)')
+  .databaselist
+    ul
+      each item in materials
+        +material-row(item.type, item.name, item.code, item.length, item.width, item.thickness, item.id)
+// ./ Main
+// Footer
+footer.container-fluid
+  small
+    | Built with 
+    a.secondary(href='https://picocss.com') Pico
+    |  &bull; 
+    a.secondary(href='https://github.com/ERieger/DT-Stock-Tracker/tree/js-rewrite') Source code
+
+  small.right
+    | Signed in &bull; 
+    a.secondary(href='/logout') Logout
+// ./ Footer
+// Minimal theme switcher
+script(src='/static/js/theme-switcher.client.js')
+script(src='/static/js/material-management.client.js')
