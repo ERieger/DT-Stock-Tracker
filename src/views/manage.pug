@@ -1,5 +1,6 @@
 doctype html
 include ../mixins/material.mixin.pug
+include ../mixins/edit-card.mixin.pug
 
 head
   meta(charset='utf-8')
@@ -50,20 +51,10 @@ nav.container-fluid
 main#materialContainer.container
   article.interaction
     .grid
-      select#type(required=true)
-        option(value='' selected=true hidden=true disabled='') Type
-        option(value='0') Board
-        option(value='1') Plank
-        option(value='2') Dowel
-      input#name(type='text' placeholder='Name' required=true)
-      input#code(type='text' placeholder='Code' required=true)
-      input#length(type='number' placeholder='Length' required=true)
-      input#width(type='number' placeholder='Width' required=true)
-      input#thickness(type='number' placeholder='Thickness' required=true)
-    a.round.reset(title='reset inputs' onclick="resetInputs()")
-      box-icon(name='reset' color='var(--contrast-hover)')
-    a.round.create(title='add new material' onclick="addMaterial()")
-      box-icon(name='check' color='var(--form-element-valid-active-border-color)')
+      if typeof edit == 'undefined'
+        +edit-card(undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+      else
+        +edit-card(edit.type, edit.name, edit.id, edit.dim.l, edit.dim.w, edit.dim.h, edit._id)
   .databaselist
     ul
       each item in materials

@@ -13,6 +13,12 @@ const config = require("./config/main.config.json")
 
 const dotenv = require('dotenv');                               // Require env library
 
+if (process.env.DOCKERED == "true") {
+    dotenv.config({ path: `${__dirname}/../docker.env` });            // Set env location
+} else {
+    dotenv.config({ path: `${__dirname}/../.env` });            // Set env location
+}
+
 // Initialise app
 const app = express();                      // Define app
 app.set('views', __dirname + '/views');     // Views directory

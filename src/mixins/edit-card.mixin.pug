@@ -1,0 +1,34 @@
+mixin edit-card(type, name, id, length, width, thickness, _id)
+    if typeof type == "undefined"
+        select#type(required=true)
+            option(value='' selected hidden=true disabled='') Type
+            option(value='0') Board
+            option(value='1') Plank
+            option(value='2') Dowel
+    else if type == 0
+        select#type(required=true)
+            option(value='' hidden=true disabled='') Type
+            option(value='0' selected) Board
+            option(value='1') Plank
+            option(value='2') Dowel
+    else if type == 1
+        select#type(required=true)
+            option(value='' hidden=true disabled='') Type
+            option(value='0') Board
+            option(value='1' selected) Plank
+            option(value='2') Dowel
+    else if type == 2
+        select#type(required=true)
+            option(value='' selected hidden=true disabled='') Type
+            option(value='0') Board
+            option(value='1') Plank
+            option(value='2' selected) Dowel
+    input#name(type='text' placeholder='Name' required=true value=name)
+    input#code(type='text' placeholder='Code' required=true value=id)
+    input#length(type='number' placeholder='Length' required=true value=length)
+    input#width(type='number' placeholder='Width' required=true value=width)
+    input#thickness(type='number' placeholder='Thickness' required=true value=thickness)
+    a.round.reset(title='reset inputs' onclick="resetInputs()")
+        box-icon(name='reset' color='var(--contrast-hover)')
+    a.round.create(title='add new material' onclick="addMaterial('"+_id+"')")
+        box-icon(name='check' color='var(--form-element-valid-active-border-color)')

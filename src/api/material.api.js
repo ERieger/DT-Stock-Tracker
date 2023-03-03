@@ -35,4 +35,14 @@ router.post('/delete', async (req, res) => {
     }
 });
 
+router.post('/edit', async (req, res) => {
+    console.log(req.body);
+    try {
+        await Materials.updateOne({ _id: req.body.id }, req.body.material);
+        res.send('success.');
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 module.exports = router;

@@ -1,5 +1,7 @@
 FROM node:alpine
 
+ENV DOCKERED true
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only-production

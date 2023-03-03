@@ -6,20 +6,24 @@ function resetInputs() {
     $('#length').val('');
     $('#width').val('');
     $('#thickness').val('');
+
+    window.location.href = "/manage";
 }
 
 function deleteMaterial(material) {
     console.log(`Deleting material: ${material}`);
-    $.post('/api/materials/delete', {material: material}, function (res) {
+    $.post('/api/materials/delete', { material: material }, function (res) {
         console.log(res);
         location.reload();
-    }).fail(function(response) {
+    }).fail(function (response) {
         alert('Error: ' + response.responseText);
     });
 }
 
-function addMaterial() {
+function addMaterial(id) {
     console.log('Adding material.');
+
+    console.log(id)
 
     let material = {
         type: $('#type').val(),
@@ -32,12 +36,29 @@ function addMaterial() {
         }
     }
 
-    $.post('/api/materials/add', material, function (res) {
-        console.log(res);
-        location.reload();
-    }).fail(function(response) {
-        alert('Error: ' + response.responseText);
-    });
-
+    if (typeof id == 'undefined') {
+        $.post('/api/materials/add', material, function (res) {
+            console.log(res);
+            resetInputs();
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });
+    } else {
+        let body = {
+            id: id,
+            material: material
+        }
+        $.post('/api/materials/edit', body, function (res) {
+            console.log(res);
+            resetInputs();
+        }).fail(function (response) {
+            alert('Error: ' + response.responseText);
+        });        
+    }
     console.log(material);
+}
+
+function editMaterial(id) {
+    console.log('Editing Material:', id);
+    window.location.href = `/manage?id=${id}`;
 }

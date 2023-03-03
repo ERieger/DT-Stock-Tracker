@@ -38,24 +38,58 @@ router.get('/project', connectEnsureLogin.ensureLoggedIn(), async (req, res) => 
 });
 
 router.get('/manage', async (req, res) => {
-    let materials = await Materials.find({});
-    let formattedMaterials = [];
+    console.log(req.query.id);
 
-    materials.forEach((material) => {
-        formattedMaterials.push({
-            type: material.type,
-            name: material.name,
-            code: material.id,
-            length: material.dim.l,
-            width: material.dim.w,
-            thickness: material.dim.h,
-            id: material._id
+    if (typeof req.query.id == 'undefined') {
+        console.log('Clean load.');
+        let materials = await Materials.find({});
+        let formattedMaterials = [];
+
+        materials.forEach((material) => {
+            formattedMaterials.push({
+                type: material.type,
+                name: material.name,
+                code: material.id,
+                length: material.dim.l,
+                width: material.dim.w,
+                thickness: material.dim.h,
+                id: material._id
+            });
         });
-    });
 
-    res.render('manage', {
-        materials: formattedMaterials
-    });
+        res.render('manage', {
+            materials: formattedMaterials,
+            edit: {
+                _id: undefined,
+                type: undefined,
+                id: undefined,
+                name: undefined,
+                price: undefined,
+                dim: { r: undefined, l: undefined, w: undefined, h: undefined }
+            }
+        });
+    } else {
+        console.log('Edit:', req.query.id);
+        let materials = await Materials.find({});
+        let formattedMaterials = [];
+
+        materials.forEach((material) => {
+            formattedMaterials.push({
+                type: material.type,
+                name: material.name,
+                code: material.id,
+                length: material.dim.l,
+                width: material.dim.w,
+                thickness: material.dim.h,
+                id: material._id
+            });
+        });
+
+        res.render('manage', {
+            materials: formattedMaterials,
+            edit: await Materials.findOne({ _id: req.query.id })
+        });
+    }
 });
 
 router.get('/summary', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
@@ -78,7 +112,7 @@ router.get('/summaryFile', connectEnsureLogin.ensureLoggedIn(), async (req, res)
 
     res.setHeader("content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     res.attachment("summary.xlsx");
-    workbook.xlsx.write(res).then(() => {res.end()});
+    workbook.xlsx.write(res).then(() => { res.end() });
 });
 
 router.get('/authtest', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
